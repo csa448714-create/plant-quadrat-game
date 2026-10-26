@@ -166,12 +166,30 @@ export default function App() {
     }
   }, [groupId]);
 
-  // Poll group sync every 2.5 seconds
+  // Poll group sync every 2.5 seconds & listen to BroadcastChannel for instant local tab sync
   useEffect(() => {
     syncWithRemoteGroup();
     const interval = setInterval(syncWithRemoteGroup, 2500);
-    return () => clearInterval(interval);
-  }, [syncWithRemoteGroup]);
+
+    let ch: BroadcastChannel | null = null;
+    if (typeof window !== 'undefined' && 'BroadcastChannel' in window && groupId) {
+      try {
+        ch = new BroadcastChannel(`quadrat_group_${groupId.trim()}`);
+        ch.onmessage = event => {
+          if (event.data?.type === 'QUADRAT_UPDATE') {
+            syncWithRemoteGroup();
+          }
+        };
+      } catch {
+        // ignore
+      }
+    }
+
+    return () => {
+      clearInterval(interval);
+      ch?.close();
+    };
+  }, [groupId, syncWithRemoteGroup]);
 
   // Active quadrats based on teamSize (4-person uses 1~4, 5-person uses 1~5)
   const activeQuadrats = useMemo(() => {

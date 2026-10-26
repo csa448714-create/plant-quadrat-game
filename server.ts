@@ -126,17 +126,24 @@ app.post('/api/groups/:groupId/reset', (req, res) => {
 
 async function setupServer() {
   if (isProd) {
+    app.use('/plant-quadrat-game', express.static(path.resolve(__dirname, 'dist')));
     app.use(express.static(path.resolve(__dirname, 'dist')));
     app.get('*', (_req, res) => {
       res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
     });
   } else {
+    // In dev mode, redirect root to /plant-quadrat-game/ so it loads seamlessly with the base path
+    app.get('/', (_req, res) => {
+      res.redirect('/plant-quadrat-game/');
+    });
+
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
         hmr: process.env.DISABLE_HMR !== 'true',
       },
       appType: 'spa',
+      base: '/plant-quadrat-game/',
     });
     app.use(vite.middlewares);
   }
