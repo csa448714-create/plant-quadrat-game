@@ -1,0 +1,42 @@
+{
+  "1모둠": {
+    "groupId": "1모둠",
+    "teamSize": 5,
+    "quadrats": {
+      "1": {
+        "quadratId": 1,
+        "studentName": "김철수",
+        "speciesCounts": {
+          "clover": 5,
+          "dandelion": 3,
+          "violet": 2,
+          "foxtail": 1
+        },
+        "speciesCovers": {
+          "clover": 12,
+          "dandelion": 8,
+          "violet": 6,
+          "foxtail": 4
+        },
+        "updatedAt": 1792585479326
+      },
+      "2": {
+        "quadratId": 2,
+        "studentName": "이영희",
+        "speciesCounts": {
+          "clover": 4,
+          "dandelion": 2,
+          "violet": 3,
+          "foxtail": 1
+        },
+        "speciesCovers": {
+          "clover": 10,
+          "dandelion": 6,
+          "violet": 9,
+          "foxtail": 3
+        },
+        "updatedAt": 1792585810775
+      }
+    }
+  }
+}

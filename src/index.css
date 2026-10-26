@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'DungGeunMo';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@layer base {
+  body {
+    font-family: 'DungGeunMo', 'Noto Sans KR', sans-serif;
+    letter-spacing: -0.02em;
+    image-rendering: pixelated;
+  }
+}
+
+.pixel-font {
+  font-family: 'DungGeunMo', monospace;
+}
+
+.pixel-border {
+  border: 2px solid #1c1917;
+  box-shadow: 3px 3px 0px #1c1917;
+}
+
+.pixel-border-sm {
+  border: 2px solid #1c1917;
+  box-shadow: 2px 2px 0px #1c1917;
+}
+
+.pixel-border-emerald {
+  border: 2px solid #064e3b;
+  box-shadow: 3px 3px 0px #064e3b;
+}
+
+.pixel-btn {
+  border: 2px solid #1c1917;
+  box-shadow: 2px 2px 0px #1c1917;
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+.pixel-btn:hover {
+  filter: brightness(1.05);
+}
+
+.pixel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px #1c1917;
+}
+
+.pixel-grid-pattern {
+  background-size: 16px 16px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+}
