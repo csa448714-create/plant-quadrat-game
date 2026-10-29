@@ -30,10 +30,7 @@ export const RoleSelectStep: React.FC<RoleSelectStepProps> = ({
   completedQuadratIds = [],
   remoteMemberNames = {},
 }) => {
-  const [customGroupInput, setCustomGroupInput] = useState<string>('');
-  const [showCustomInput, setShowCustomInput] = useState<boolean>(false);
-
-  const defaultGroups = ['1모둠', '2모둠', '3모둠', '4모둠', '5모둠', '6모둠'];
+  const defaultGroups = ['1모둠', '2모둠', '3모둠', '4모둠', '5모둠'];
 
   const quadratDescriptions = [
     { id: 1, name: '1번 방형구', desc: '중앙 북쪽 초지 (4종 혼합 서식 구역)', color: '#0284c7' },
@@ -52,13 +49,6 @@ export const RoleSelectStep: React.FC<RoleSelectStepProps> = ({
 
   const handleSelectPresetGroup = (name: string) => {
     onChangeGroupId(name);
-    setShowCustomInput(false);
-  };
-
-  const handleApplyCustomGroup = () => {
-    if (customGroupInput.trim()) {
-      onChangeGroupId(customGroupInput.trim());
-    }
   };
 
   return (
@@ -88,20 +78,20 @@ export const RoleSelectStep: React.FC<RoleSelectStepProps> = ({
           </p>
         </div>
 
-        {/* Group Selector Quick Buttons */}
+        {/* Group Selector Quick Buttons (1모둠 ~ 5모둠) */}
         <div className="space-y-2">
           <label className="text-xs font-bold text-[#bef264] pixel-font block">
-            소속 모둠을 선택하세요:
+            소속 모둠을 선택하세요 (1모둠 ~ 5모둠):
           </label>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+          <div className="grid grid-cols-5 gap-2">
             {defaultGroups.map(name => {
-              const isSelected = groupId === name && !showCustomInput;
+              const isSelected = groupId === name;
               return (
                 <button
                   key={name}
                   type="button"
                   onClick={() => handleSelectPresetGroup(name)}
-                  className={`py-2 px-2 text-xs font-bold border-2 pixel-btn cursor-pointer pixel-font transition-all ${
+                  className={`py-2 px-1 sm:px-2 text-xs sm:text-sm font-bold border-2 pixel-btn cursor-pointer pixel-font transition-all ${
                     isSelected
                       ? 'bg-[#facc15] text-stone-950 border-black shadow-[2px_2px_0px_#000] scale-[1.02]'
                       : 'bg-[#1b2212] text-[#d9f99d] border-[#3f4f24] hover:bg-[#2d381c]'
@@ -111,35 +101,6 @@ export const RoleSelectStep: React.FC<RoleSelectStepProps> = ({
                 </button>
               );
             })}
-          </div>
-
-          {/* Custom Group Code Option */}
-          <div className="pt-1 flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setShowCustomInput(!showCustomInput)}
-              className="text-[11px] text-[#fef08a] hover:underline pixel-font cursor-pointer"
-            >
-              [직접 모둠명 입력하기...]
-            </button>
-            {showCustomInput && (
-              <div className="flex items-center gap-1.5 w-full sm:w-auto">
-                <input
-                  type="text"
-                  placeholder="예: 2반 3모둠, 솔잎조"
-                  value={customGroupInput}
-                  onChange={e => setCustomGroupInput(e.target.value)}
-                  className="bg-[#12170b] text-white border-2 border-[#3f4f24] px-2.5 py-1 text-xs pixel-font focus:outline-none focus:border-[#bef264]"
-                />
-                <button
-                  type="button"
-                  onClick={handleApplyCustomGroup}
-                  className="px-3 py-1 bg-[#15803d] text-white text-xs font-bold border border-black pixel-btn pixel-font cursor-pointer"
-                >
-                  적용
-                </button>
-              </div>
-            )}
           </div>
         </div>
 

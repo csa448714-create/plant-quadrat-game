@@ -97,10 +97,10 @@ export function calculateExactQuadratStat(
   }
 
   const covers: Record<PlantSpeciesId, number> = {
-    clover: Number(((speciesCoveredCount.clover / totalPoints) * 100).toFixed(1)),
-    dandelion: Number(((speciesCoveredCount.dandelion / totalPoints) * 100).toFixed(1)),
-    violet: Number(((speciesCoveredCount.violet / totalPoints) * 100).toFixed(1)),
-    foxtail: Number(((speciesCoveredCount.foxtail / totalPoints) * 100).toFixed(1)),
+    clover: Math.round((speciesCoveredCount.clover / totalPoints) * 100),
+    dandelion: Math.round((speciesCoveredCount.dandelion / totalPoints) * 100),
+    violet: Math.round((speciesCoveredCount.violet / totalPoints) * 100),
+    foxtail: Math.round((speciesCoveredCount.foxtail / totalPoints) * 100),
   };
 
   return {
@@ -325,7 +325,12 @@ export function findDominantSpecies(
 }
 
 /**
- * Validation helper: checks student input against true value within tolerance
+ * Validation helper: checks student input against true value within tolerance.
+ * Supports:
+ * - Direct comparison with true value (tolerance ±0.05 ~ 0.1)
+ * - Rounding to 2 decimal places (e.g. 8.33, 16.67)
+ * - Rounding to 1 decimal place (e.g. 8.3, 16.7)
+ * - Integer representations (e.g. 5 or 5.00)
  */
 export function evaluateStudentValue(
   inputStr: string,
@@ -341,11 +346,28 @@ export function evaluateStudentValue(
     return 'incorrect';
   }
 
-  // Allow rounding to 1 decimal place or standard floating variance
-  const diff = Math.abs(parsed - trueValue);
-  const roundedDiff = Math.abs(parsed - Math.round(trueValue * 10) / 10);
+  const effectiveTolerance = Math.max(tolerance, 0.1);
 
-  if (diff <= tolerance || roundedDiff <= tolerance) {
+  // 1. Direct difference
+  const diff = Math.abs(parsed - trueValue);
+  if (diff <= effectiveTolerance) {
+    return 'correct';
+  }
+
+  // 2. Rounded to 2 decimal places (소수점 셋째 자리에서 반올림)
+  const round2 = Math.round(trueValue * 100) / 100;
+  if (Math.abs(parsed - round2) <= 0.05) {
+    return 'correct';
+  }
+
+  // 3. Rounded to 1 decimal place
+  const round1 = Math.round(trueValue * 10) / 10;
+  if (Math.abs(parsed - round1) <= 0.1) {
+    return 'correct';
+  }
+
+  // 4. Integer check
+  if (Math.round(trueValue) === trueValue && Math.abs(parsed - trueValue) < 0.01) {
     return 'correct';
   }
 

@@ -46,6 +46,8 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
   const [showGrid10x10, setShowGrid10x10] = useState<boolean>(true);
   const [showRootPoints, setShowRootPoints] = useState<boolean>(true);
   const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
+  const [hoveredPlantId, setHoveredPlantId] = useState<string | null>(null);
+  const [hoveredSpeciesId, setHoveredSpeciesId] = useState<PlantSpeciesId | null>(null);
   const [showHelpNotice, setShowHelpNotice] = useState<boolean>(false);
   const [showSaveToast, setShowSaveToast] = useState<boolean>(false);
 
@@ -53,6 +55,70 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
   const visiblePlants = useMemo(() => {
     return plants.filter(p => isPlantFullyInQuadrat(p, quadrat));
   }, [plants, quadrat]);
+
+  // Map each plant inside the quadrat to its discrete occupied 10x10 cells
+  const plantOccupiedCellsMap = useMemo(() => {
+    const map = new Map<string, { col: number; row: number; key: string }[]>();
+    for (const p of visiblePlants) {
+      const relX = ((p.x - quadrat.x) / quadrat.size) * 10;
+      const relY = ((p.y - quadrat.y) / quadrat.size) * 10;
+      const c = Math.min(9, Math.max(0, Math.floor(relX)));
+      const r = Math.min(9, Math.max(0, Math.floor(relY)));
+
+      const cells: { col: number; row: number; key: string }[] = [];
+      const add = (col: number, row: number) => {
+        if (col >= 0 && col < 10 && row >= 0 && row < 10) {
+          const key = `${col}-${row}`;
+          if (!cells.some(item => item.key === key)) {
+            cells.push({ col, row, key });
+          }
+        }
+      };
+
+      add(c, r);
+
+      if (p.species === 'dandelion') {
+        // Dandelion occupies exactly 2 cells (2%)
+        add(c < 9 ? c + 1 : c - 1, r);
+      } else if (p.species === 'violet') {
+        // Violet occupies 2 cells (or 3 in special large specimens)
+        if (p.radius > 12) {
+          add(c < 9 ? c + 1 : c - 1, r);
+          add(c, r < 9 ? r + 1 : r - 1);
+        } else {
+          add(c < 9 ? c + 1 : c - 1, r);
+        }
+      } else if (p.species === 'clover') {
+        // Clover occupies 3~4 spreading cells
+        add(c < 9 ? c + 1 : c - 1, r);
+        add(c, r < 9 ? r + 1 : r - 1);
+        if (p.radius > 11) {
+          add(c < 9 ? c + 1 : c - 1, r < 9 ? r + 1 : r - 1);
+        }
+      } else if (p.species === 'foxtail') {
+        // Foxtail occupies 1 slender blade cell
+      }
+
+      map.set(p.id, cells);
+    }
+    return map;
+  }, [visiblePlants, quadrat]);
+
+  // Set of all currently highlighted cells (due to plant hover/selection or species hover)
+  const highlightedCellKeys = useMemo(() => {
+    const keys = new Set<string>();
+    for (const p of visiblePlants) {
+      const isTarget =
+        p.id === hoveredPlantId ||
+        p.id === selectedPlantId ||
+        p.species === hoveredSpeciesId;
+      if (isTarget) {
+        const cells = plantOccupiedCellsMap.get(p.id) || [];
+        cells.forEach(c => keys.add(c.key));
+      }
+    }
+    return keys;
+  }, [visiblePlants, hoveredPlantId, selectedPlantId, hoveredSpeciesId, plantOccupiedCellsMap]);
 
   const maxQuadratId = Math.min(teamSize, allQuadrats.length);
 
@@ -95,11 +161,11 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
   const selectedPlant = plants.find(p => p.id === selectedPlantId);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-xs select-none">
-      <div className="bg-[#fcfaf5] border-4 border-stone-900 shadow-[8px_8px_0px_#1c1917] w-full max-w-5xl max-h-[94vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-3 md:p-4 bg-black/80 backdrop-blur-xs select-none">
+      <div className="bg-[#fcfaf5] border-4 border-stone-900 shadow-[8px_8px_0px_#1c1917] w-full max-w-5xl md:max-w-6xl max-h-[96vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         {/* Modal Top Header (Pixel RPG Quest style) */}
-        <div className="px-4 py-3 border-b-3 border-stone-900 bg-[#354323] text-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="px-3 sm:px-4 py-2.5 sm:py-3 border-b-3 border-stone-900 bg-[#354323] text-white flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-3">
             <span
               className="text-xs font-bold text-white px-2 py-0.5 border border-black shadow-[1px_1px_0px_#000] pixel-font"
               style={{ backgroundColor: quadrat.color }}
@@ -148,10 +214,10 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
           </div>
         </div>
 
-        {/* Modal Body */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 grid grid-cols-1 lg:grid-cols-12 gap-5">
-          {/* Left Column: Enlarged Quadrat Viewport (7 cols) */}
-          <div className="lg:col-span-7 flex flex-col gap-3">
+        {/* Modal Body: Side-by-side on tablet (md:) and desktop (lg:) */}
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-5 grid grid-cols-1 md:grid-cols-12 gap-3.5 md:gap-4 lg:gap-5">
+          {/* Left Column: Enlarged Quadrat Viewport (6 cols on tablet, 7 cols on desktop) */}
+          <div className="md:col-span-6 lg:col-span-7 flex flex-col gap-2.5 sm:gap-3">
             {/* Viewport Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
               <div className="flex items-center gap-1.5">
@@ -210,31 +276,57 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
             )}
 
             {/* Enlarged 1m x 1m Quadrat Square (16-bit RPG Top-down Tile View) */}
-            <div className="relative w-full aspect-square bg-[#224422] overflow-hidden border-4 border-stone-900 shadow-[4px_4px_0px_#1c1917] select-none">
+            <div className="relative w-full aspect-square bg-[#1f3d1b] overflow-hidden border-4 border-stone-900 shadow-[5px_5px_0px_#1c1917] select-none">
               {/* Organic ground texture */}
               <div
-                className="absolute inset-0 opacity-30 pointer-events-none"
+                className="absolute inset-0 opacity-25 pointer-events-none"
                 style={{
                   backgroundImage: `
-                    linear-gradient(45deg, #1b3815 25%, transparent 25%),
-                    linear-gradient(-45deg, #1b3815 25%, transparent 25%),
-                    linear-gradient(45deg, transparent 75%, #1b3815 75%),
-                    linear-gradient(-45deg, transparent 75%, #1b3815 75%)
+                    linear-gradient(45deg, #162f12 25%, transparent 25%),
+                    linear-gradient(-45deg, #162f12 25%, transparent 25%),
+                    linear-gradient(45deg, transparent 75%, #162f12 75%),
+                    linear-gradient(-45deg, transparent 75%, #162f12 75%)
                   `,
                   backgroundSize: '16px 16px',
                   backgroundPosition: '0 0, 0 8px, 8px -8px, -8px 0px',
                 }}
               />
 
-              {/* 10x10 Cover Auxiliary Grid (1 cell = 1% cover) */}
+              {/* 10x10 Cover Auxiliary Grid (1 cell = 1% cover) with 5-unit distinct dividers */}
               {showGrid10x10 && (
-                <div className="absolute inset-0 grid grid-cols-10 grid-rows-10 pointer-events-none z-20 opacity-55">
-                  {Array.from({ length: 100 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="border-r border-b border-white/60"
-                    />
-                  ))}
+                <div className="absolute inset-0 grid grid-cols-10 grid-rows-10 pointer-events-none z-20">
+                  {Array.from({ length: 100 }).map((_, i) => {
+                    const col = i % 10;
+                    const row = Math.floor(i / 10);
+                    const key = `${col}-${row}`;
+                    const isHighlighted = highlightedCellKeys.has(key);
+                    const isCol5Divider = col === 4;
+                    const isRow5Divider = row === 4;
+
+                    return (
+                      <div
+                        key={key}
+                        className={`transition-colors duration-150 relative ${
+                          isCol5Divider ? 'border-r-2 border-r-[#facc15]/80' : 'border-r border-r-white/35'
+                        } ${
+                          isRow5Divider ? 'border-b-2 border-b-[#facc15]/80' : 'border-b border-b-white/35'
+                        } ${
+                          isHighlighted
+                            ? 'bg-[#facc15]/45 ring-2 ring-[#fef08a] ring-inset z-10'
+                            : (col + row) % 2 === 0
+                            ? 'bg-black/5'
+                            : 'bg-transparent'
+                        }`}
+                      >
+                        {/* Subtle coordinates or cell indicator when highlighted */}
+                        {isHighlighted && (
+                          <span className="absolute bottom-0 right-0 text-[8px] font-mono font-bold text-black bg-[#facc15] px-0.5 leading-none pointer-events-none">
+                            1%
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
@@ -247,6 +339,7 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
 
                   const isChecked = checkedPlantIds.includes(plant.id);
                   const isSelected = selectedPlantId === plant.id;
+                  const isHovered = hoveredPlantId === plant.id || hoveredSpeciesId === plant.species;
 
                   return (
                     <div
@@ -255,8 +348,10 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
                         e.stopPropagation();
                         togglePlantChecked(plant.id);
                       }}
-                      className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-transform hover:scale-105 ${
-                        isSelected ? 'z-30' : 'z-10'
+                      onMouseEnter={() => setHoveredPlantId(plant.id)}
+                      onMouseLeave={() => setHoveredPlantId(null)}
+                      className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-transform ${
+                        isSelected || isHovered ? 'z-30 scale-110' : 'z-10 hover:scale-105'
                       }`}
                       style={{
                         left: `${relX}%`,
@@ -264,7 +359,7 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
                         width: `${relDiameter}%`,
                         height: `${relDiameter}%`,
                       }}
-                      title={`${PLANT_SPECIES[plant.species].koreanName} (클릭하여 체크)`}
+                      title={`${PLANT_SPECIES[plant.species].koreanName} (클릭하여 체크 / 마우스 올려 격자 확인)`}
                     >
                       <PlantIllustration
                         species={plant.species}
@@ -291,8 +386,8 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
 
               {/* Quadrat Outer Boundary Rulers */}
               <div className="absolute inset-0 border-2 border-dashed border-white/70 pointer-events-none" />
-              <div className="absolute bottom-2 left-2 text-[10px] text-white font-mono bg-black/80 px-2 py-0.5 border border-white/40 pointer-events-none pixel-font">
-                규격: 1m × 1m (100칸) · 완입 개체만 표시
+              <div className="absolute bottom-2 left-2 text-[10px] text-white font-mono bg-black/85 px-2 py-0.5 border border-white/40 pointer-events-none pixel-font">
+                규격: 1m × 1m (총 100칸) · 5칸 구분선 표시
               </div>
             </div>
 
@@ -320,69 +415,117 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
               </div>
             ) : (
               <p className="text-stone-500 text-xs italic text-center pixel-font">
-                방형구 안의 식물을 클릭하면 체크 표시 및 식별 정보를 확인할 수 있습니다.
+                💡 식물에 마우스를 올리면 차지하는 격자 칸(%)이 노란색으로 하이라이트됩니다!
               </p>
             )}
           </div>
 
-          {/* Right Column: Quadrat Survey Input Table (5 cols) styled like Retro RPG Inventory */}
-          <div className="lg:col-span-5 flex flex-col justify-between bg-[#f5f2eb] border-3 border-stone-900 p-4 shadow-[4px_4px_0px_#1c1917]">
-            <div className="space-y-3.5">
+          {/* Right Column: Quadrat Survey Input Table & Mini Guide (6 cols on tablet, 5 cols on desktop) */}
+          <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between bg-[#f5f2eb] border-3 border-stone-900 p-3 sm:p-4 shadow-[4px_4px_0px_#1c1917]">
+            <div className="space-y-2.5 sm:space-y-3">
               <div className="flex items-center justify-between border-b-2 border-stone-800 pb-2">
                 <div>
-                  <h3 className="text-sm font-bold text-stone-900 pixel-font">
+                  <h3 className="text-xs sm:text-sm font-bold text-stone-900 pixel-font">
                     [1단계 · 개별활동] #{quadrat.id}번 방형구 관측 기록
                   </h3>
-                  <p className="text-[11px] text-stone-600 pixel-font">
-                    토끼풀, 민들레, 제비꽃, 강아지풀의 개체수와 차지한 면적(%) 기록
+                  <p className="text-[10px] sm:text-[11px] text-stone-600 pixel-font">
+                    식물별 개체수와 차지한 면적(피도, %) 기록
                   </p>
                 </div>
                 <div
-                  className="flex items-center gap-1.5 text-[11px] font-bold text-emerald-900 bg-[#dcfce7] px-2.5 py-1 border border-emerald-700 pixel-font shadow-[2px_2px_0px_#14532d]"
+                  className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-emerald-900 bg-[#dcfce7] px-2 sm:px-2.5 py-1 border border-emerald-700 pixel-font shadow-[2px_2px_0px_#14532d] shrink-0"
                   title="10×10 격자와 식물 클릭 체크를 활용하여 직접 관측합니다"
                 >
                   <Eye className="w-3.5 h-3.5 text-emerald-700" />
-                  <span>개별 관측 기록</span>
+                  <span>개별 관측</span>
                 </div>
               </div>
 
-              {/* Clarification banner about ecological metrics flow */}
-              <div className="bg-[#eff6ff] border-2 border-blue-600 p-2.5 text-xs text-blue-950 pixel-font space-y-1">
-                <div className="font-bold text-blue-900 flex items-center gap-1">
-                  <span>📌</span>
-                  <span>[1단계: 개별활동 안내]</span>
+              {/* 2-1 & 2-3 Visual Calculation Guide Box */}
+              <div className="bg-[#fefce8] border-2 border-[#ca8a04] p-2.5 sm:p-3 text-xs text-stone-900 pixel-font space-y-1.5 sm:space-y-2 shadow-[2px_2px_0px_#a16207]">
+                <div className="flex items-center justify-between border-b border-[#fef08a] pb-1">
+                  <div className="font-extrabold text-[#713f12] flex items-center gap-1 text-[11px] sm:text-xs">
+                    <span>🌱</span>
+                    <span>식물이 차지한 면적(피도) 계산 안내</span>
+                  </div>
+                  <span className="text-[10px] bg-[#fef08a] text-[#854d0e] px-1.5 py-0.5 border border-[#ca8a04] font-bold">
+                    1칸 = 1%
+                  </span>
                 </div>
-                <p className="text-[11px] leading-relaxed text-blue-900">
-                  모둠원별로 자신이 맡은 방형구에 대한 <strong>토끼풀, 민들레, 제비꽃, 강아지풀</strong>의 <strong>개체수</strong>와 <strong>차지한 면적(피도, %)</strong>을 직접 세고 측정하여 기록합니다.
-                </p>
+
+                <div className="flex items-start gap-2.5 sm:gap-3">
+                  {/* Mini 10x10 Pixel Grid Illustration */}
+                  <div className="shrink-0 flex flex-col items-center">
+                    <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#14532d] border border-black grid grid-cols-5 grid-rows-5 gap-[1px] p-[1px] shadow-[1px_1px_0px_#000]">
+                      {Array.from({ length: 25 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className={
+                            i < 4
+                              ? 'bg-[#facc15] border border-[#a16207]'
+                              : 'bg-[#1e3a17] border border-[#2d5623]'
+                          }
+                        />
+                      ))}
+                    </div>
+                    <span className="text-[9px] text-[#713f12] font-mono mt-0.5 font-bold">100칸 중 4칸=4%</span>
+                  </div>
+
+                  <div className="space-y-0.5 sm:space-y-1 text-[10px] sm:text-[11px] text-stone-800 leading-snug">
+                    <p>
+                      • <strong>방형구:</strong> 10×10 = <strong>총 100칸 (1칸=1%)</strong>
+                    </p>
+                    <p className="text-[#92400e]">
+                      • <strong>총면적 = 한 개체 면적 × 개체수</strong>
+                    </p>
+                    <p className="text-[9px] sm:text-[10px] text-stone-600 bg-white/70 p-1 border border-stone-300">
+                      예: 한 개체가 4칸 차지, 5개체이면 <strong className="text-black">4칸 × 5 = 20칸(20%)</strong>
+                    </p>
+                    <p>
+                      • <strong>피도(%) = 차지한 칸수 ÷ 100 × 100</strong>
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* 4 Species Input Cards */}
-              <div className="space-y-2.5">
+              <div className="space-y-1.5 sm:space-y-2">
                 {PLANT_SPECIES_LIST.map(spec => {
                   const cVal = counts[spec.id] ?? 0;
                   const covVal = covers[spec.id] ?? 0;
+                  const isHovered = hoveredSpeciesId === spec.id;
 
                   return (
                     <div
                       key={spec.id}
-                      className="bg-white p-2.5 border-2 border-stone-800 shadow-[2px_2px_0px_#000] space-y-1.5"
+                      onMouseEnter={() => setHoveredSpeciesId(spec.id)}
+                      onMouseLeave={() => setHoveredSpeciesId(null)}
+                      className={`p-2 border-2 transition-all ${
+                        isHovered
+                          ? 'border-[#15803d] bg-[#f0fdf4] shadow-[3px_3px_0px_#15803d]'
+                          : 'border-stone-800 bg-white shadow-[2px_2px_0px_#000]'
+                      }`}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <BotanicalIcon species={spec.id} size={28} />
-                          <span className="text-xs font-bold text-stone-900 pixel-font">
-                            {spec.koreanName}
-                          </span>
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <BotanicalIcon species={spec.id} size={24} />
+                          <div>
+                            <span className="text-xs font-bold text-stone-900 pixel-font">
+                              {spec.koreanName}
+                            </span>
+                            <span className="text-[10px] text-stone-500 ml-1 font-mono hidden sm:inline">
+                              (마우스 올리면 위치 표시)
+                            </span>
+                          </div>
                         </div>
-                        <span className="text-[10px] text-stone-500 font-mono pixel-font">
-                          1칸 = 1% 차지 면적
+                        <span className="text-[10px] text-emerald-800 bg-emerald-50 px-1.5 py-0.5 border border-emerald-300 font-mono font-bold">
+                          1칸 = 1%
                         </span>
                       </div>
 
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div>
-                          <label className="block text-[11px] font-bold text-stone-700 mb-0.5 pixel-font">
+                          <label className="block text-[10px] font-bold text-stone-700 mb-0.5 pixel-font truncate">
                             개체수 (개체)
                           </label>
                           <input
@@ -397,7 +540,7 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
                         </div>
 
                         <div>
-                          <label className="block text-[11px] font-bold text-stone-700 mb-0.5 pixel-font">
+                          <label className="block text-[10px] font-bold text-stone-700 mb-0.5 pixel-font truncate">
                             차지한 면적 (피도, %)
                           </label>
                           <div className="relative">
@@ -405,13 +548,13 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
                               type="number"
                               min="0"
                               max="100"
-                              step="0.5"
+                              step="1"
                               value={covVal === 0 ? '' : covVal}
                               placeholder="0"
                               onChange={e => handleCoverChange(spec.id, e.target.value)}
                               className="w-full px-2 py-1 border-2 border-stone-800 bg-[#fafaf9] font-mono font-bold text-sm pr-6 focus:outline-emerald-600 focus:bg-white"
                             />
-                            <span className="absolute right-2 top-1.5 text-xs text-stone-500 font-mono font-bold">
+                            <span className="absolute right-2 top-1 text-xs text-stone-500 font-mono font-bold">
                               %
                             </span>
                           </div>
@@ -424,11 +567,11 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
             </div>
 
             {/* Bottom Actions */}
-            <div className="mt-4 pt-3 border-t-2 border-stone-800 flex items-center justify-between gap-2.5">
+            <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t-2 border-stone-800 flex items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3.5 py-2 text-xs font-bold text-stone-800 bg-stone-200 hover:bg-stone-300 border-2 border-stone-900 pixel-btn pixel-font cursor-pointer"
+                className="px-3 sm:px-3.5 py-2 text-xs font-bold text-stone-800 bg-stone-200 hover:bg-stone-300 border-2 border-stone-900 pixel-btn pixel-font cursor-pointer shrink-0"
               >
                 닫기
               </button>
@@ -436,10 +579,10 @@ export const QuadratZoomModal: React.FC<QuadratZoomModalProps> = ({
               <button
                 type="button"
                 onClick={handleSave}
-                className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold text-white bg-[#15803d] hover:bg-[#166534] border-2 border-stone-900 pixel-btn pixel-font cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-bold text-white bg-[#15803d] hover:bg-[#166534] border-2 border-stone-900 pixel-btn pixel-font cursor-pointer"
               >
-                <Save className="w-4 h-4" />
-                <span>[1단계 저장] #{quadrat.id}번 개체수 및 차지한 면적 저장</span>
+                <Save className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                <span className="truncate">[1단계 저장] #{quadrat.id}번 개체수 및 차지한 면적 저장</span>
               </button>
             </div>
           </div>

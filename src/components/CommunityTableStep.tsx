@@ -21,6 +21,8 @@ import {
   AlertCircle,
   Eye,
   FileSpreadsheet,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 
 interface CommunityTableStepProps {
@@ -52,13 +54,15 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
   // Stage 2 evaluation status
   const [stage2Checked, setStage2Checked] = useState<boolean>(false);
 
-  // Stage 3 viewMode: 'input' vs 'comparison'
+  // Stage 3 view mode: 'input' (학생 직접 계산 입력) vs 'comparison' (정답 채점 및 오차 비교)
   const [viewMode, setViewMode] = useState<'input' | 'comparison'>('input');
+  // Stage 3 layout: 'table' (통합 스프레드시트 표) vs 'cards' (식물별 개별 카드)
+  const [inputLayoutMode, setInputLayoutMode] = useState<'table' | 'cards'>('table');
+
+  // Stage 3 Evaluation status
   const [evaluation, setEvaluation] = useState<Record<PlantSpeciesId, StudentTableEvaluation> | null>(null);
   const [showVictoryModal, setShowVictoryModal] = useState<boolean>(false);
-
-  // Layout mode for stage 3 input: 'cards' vs 'table'
-  const [inputLayoutMode, setInputLayoutMode] = useState<'cards' | 'table'>('cards');
+  const [showFormulas, setShowFormulas] = useState<boolean>(true);
 
   // Build the list of active quadrats data for Stage 2 team matrix
   const quadratRows = Array.from({ length: teamSize }, (_, idx) => {
@@ -205,8 +209,10 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
             </p>
           </div>
 
-          {/* Section A: 모둠원별 방형구 조사 결과 취합표 */}
-          <div className="bg-white border-4 border-stone-900 shadow-[5px_5px_0px_#1c1917] p-4 sm:p-5 space-y-3">
+          {/* 2-Column Responsive Grid: Left (취합표) & Right (전체 합산 계산) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start">
+            {/* Section A: 모둠원별 방형구 조사 결과 취합표 */}
+            <div className="bg-white border-4 border-stone-900 shadow-[5px_5px_0px_#1c1917] p-4 sm:p-5 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b-2 border-stone-800 pb-2">
               <div className="flex items-center gap-2">
                 <FileSpreadsheet className="w-4 h-4 text-emerald-800" />
@@ -271,7 +277,7 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
                               {cnt}
                             </td>
                             <td className="p-2 border-r border-stone-300 text-center font-mono text-stone-700 bg-stone-50/50">
-                              {cov.toFixed(1)}%
+                              {Math.round(cov)}%
                             </td>
                           </React.Fragment>
                         );
@@ -292,18 +298,9 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
                   <span>전체 방형구 합산 계산 (모둠원과 함께 계산하여 입력하세요)</span>
                 </h3>
                 <p className="text-[11px] text-stone-600 pixel-font mt-0.5">
-                  위 취합표를 바탕으로, 전체 {teamSize}개 방형구의 [총 개체수], [출현한 방형구 수], [차지한 면적(피도합)]을 계산해 적어 넣으세요.
+                  위 취합표를 바탕으로, 전체 {teamSize}개 방형구의 [총 개체수], [출현한 방형구 수], [차지한 면적(피도합)]을 계산해 아래 표에 적어 넣으세요.
                 </p>
               </div>
-
-              <button
-                type="button"
-                onClick={handleCheckStage2}
-                className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-[#065f46] hover:bg-[#047857] border-2 border-black pixel-btn pixel-font cursor-pointer shadow-[2px_2px_0px_#000]"
-              >
-                <Check className="w-4 h-4" />
-                <span>합산값 정답 확인</span>
-              </button>
             </div>
 
             {/* Stage 2 Input Table */}
@@ -448,7 +445,7 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
                             </div>
                             {stage2Checked && !isCoverCorrect && (
                               <span className="text-[10px] font-mono text-stone-500">
-                                (정답: {trueTotalCover.toFixed(1)}%)
+                                (정답: {Math.round(trueTotalCover)}%)
                               </span>
                             )}
                           </div>
@@ -475,6 +472,31 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
               </table>
             </div>
 
+            {/* Button directly below Stage 2 input table */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#f5f2eb] p-3 border-2 border-stone-800">
+              <div className="text-xs text-stone-700 pixel-font">
+                {stage2Checked ? (
+                  <span className="font-bold text-emerald-800 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>합산값 확인이 완료되었습니다! 일치 여부를 대조한 후 3단계로 이동하세요.</span>
+                  </span>
+                ) : (
+                  <span>
+                    총 개체수, 출현 방형구 수, 면적(피도)합을 모두 입력한 후 오른쪽 <strong>[합산값 정답 확인]</strong> 버튼을 누르세요.
+                  </span>
+                )}
+              </div>
+
+              <button
+                type="button"
+                onClick={handleCheckStage2}
+                className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-5 py-2.5 text-xs font-bold text-white bg-[#065f46] hover:bg-[#047857] border-2 border-black pixel-btn pixel-font cursor-pointer shadow-[2px_2px_0px_#000]"
+              >
+                <Check className="w-4 h-4" />
+                <span>합산값 정답 확인</span>
+              </button>
+            </div>
+
             {/* Bottom Proceed to Step 3 Action */}
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t-2 border-stone-800">
               <span className="text-xs text-stone-600 pixel-font">
@@ -491,6 +513,7 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
               </button>
             </div>
           </div>
+          </div>
         </div>
       )}
 
@@ -505,15 +528,11 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
               <div className="flex items-center gap-2 mb-1">
                 <Calculator className="w-5 h-5 text-blue-800" />
                 <h2 className="text-base sm:text-lg font-bold text-stone-900 pixel-font">
-                  {viewMode === 'input'
-                    ? `[3단계 · 협동활동] 6대 생태 지표 계산 및 중요치(IV) 수기 산출`
-                    : `[3단계 검증] 내가 계산한 값 vs 실제 정밀 측정값 비교`}
+                  [3단계 · 협동활동] 통합 식물 군집 계산표 (밀도·빈도·피도 및 중요치 산출)
                 </h2>
               </div>
               <p className="text-xs sm:text-sm text-stone-600 pixel-font">
-                {viewMode === 'input'
-                  ? `2단계에서 합산한 자료를 바탕으로 종이 학습지의 공식을 보며 [밀도], [빈도], [피도], [상대밀도], [상대빈도], [상대피도], [중요치]를 직접 계산하여 입력하세요.`
-                  : `자신이 수기로 계산한 값과 실제 측정값을 비교하여 일치 여부를 확인하세요.`}
+                2단계에서 합산한 자료를 바탕으로 공식을 활용하여 [밀도], [빈도], [피도], [상대밀도], [상대빈도], [상대피도], [중요치]를 계산해 아래 통합 표에 입력하세요.
               </p>
             </div>
 
@@ -525,34 +544,100 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
               >
                 ◀ 2단계 취합자료 보기
               </button>
-
               {viewMode === 'input' && (
-                <div className="flex items-center bg-stone-200 border-2 border-stone-900 p-0.5">
-                  <button
-                    type="button"
-                    onClick={() => setInputLayoutMode('cards')}
-                    className={`px-2.5 py-1 text-xs font-bold pixel-font cursor-pointer ${
-                      inputLayoutMode === 'cards'
-                        ? 'bg-[#15803d] text-white shadow-[1px_1px_0px_#000]'
-                        : 'text-stone-700 hover:text-black'
-                    }`}
-                  >
-                    🃏 종별 카드 뷰
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setInputLayoutMode('table')}
-                    className={`px-2.5 py-1 text-xs font-bold pixel-font cursor-pointer ${
-                      inputLayoutMode === 'table'
-                        ? 'bg-[#15803d] text-white shadow-[1px_1px_0px_#000]'
-                        : 'text-stone-700 hover:text-black'
-                    }`}
-                  >
-                    📋 종합 표 뷰
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setInputLayoutMode(prev => (prev === 'table' ? 'cards' : 'table'))}
+                  className="px-3 py-1.5 text-xs font-bold text-stone-900 bg-amber-200 hover:bg-amber-300 border-2 border-stone-800 pixel-btn pixel-font cursor-pointer shadow-[1px_1px_0px_#000]"
+                >
+                  {inputLayoutMode === 'table' ? '📋 종별 카드로 입력' : '📊 통합 표로 입력'}
+                </button>
               )}
             </div>
+          </div>
+
+          {/* 3. 소수점 계산 규칙 안내 배너 (Requirement 3) */}
+          <div className="bg-[#fefce8] border-3 border-[#ca8a04] p-4 shadow-[4px_4px_0px_#854d0e] text-stone-900 pixel-font space-y-2">
+            <div className="flex items-center gap-2 text-sm font-bold text-[#854d0e]">
+              <span className="text-base">📌</span>
+              <span>계산 안내 (소수점 반올림 및 정답 판정 기준)</span>
+            </div>
+            <ul className="text-xs text-stone-800 space-y-1 pl-4 list-disc leading-relaxed">
+              <li>
+                <strong>소수점 반올림:</strong> 계산 결과가 딱 떨어지지 않는 경우 <strong>소수점 아래 셋째 자리에서 반올림하여 둘째 자리까지</strong> 나타내세요. (예: 25 ÷ 3 = 8.33, 100 ÷ 6 = 16.67)
+              </li>
+              <li>
+                <strong>정수 입력:</strong> 계산 결과가 정수인 경우 그대로 입력하거나 .00을 붙여도 모두 정답으로 인정됩니다. (예: <strong>5</strong> 또는 <strong>5.00</strong> 모두 정답)
+              </li>
+              <li>
+                <strong>상대값 오차 방지:</strong> 중간 계산 과정의 오차를 줄이기 위해 상대값 계산 시 가능한 한 반올림 전의 값을 활용하세요.
+              </li>
+              <li>
+                <strong>자동 채점:</strong> 학생들의 반올림 오차(±0.05~0.1 범위)를 폭넓게 감안하여 정확하게 정답을 판정합니다.
+              </li>
+            </ul>
+          </div>
+
+          {/* Collapsible Formula Accordion (Requirement 5-4) */}
+          <div className="bg-white border-3 border-stone-900 shadow-[4px_4px_0px_#1c1917] overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setShowFormulas(!showFormulas)}
+              className="w-full p-3.5 bg-stone-100 hover:bg-stone-200 border-b border-stone-300 flex items-center justify-between text-xs sm:text-sm font-bold text-stone-900 pixel-font cursor-pointer"
+            >
+              <div className="flex items-center gap-2">
+                <Calculator className="w-4 h-4 text-emerald-700" />
+                <span>📐 [교과서 공식 안내] 6대 지표 및 중요치(IV) 계산 공식 확인하기</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-stone-600 text-xs">
+                <span>{showFormulas ? '접기 ▲' : '펼치기 ▼'}</span>
+                {showFormulas ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </div>
+            </button>
+
+            {showFormulas && (
+              <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs pixel-font bg-[#fafaf9]">
+                <div className="p-2.5 bg-white border-2 border-stone-300 space-y-1">
+                  <strong className="text-emerald-800 block text-xs">① 밀도 (Density)</strong>
+                  <p className="text-stone-700 font-mono text-[11px]">= 개체수 ÷ 전체 면적 ({teamSize}m²)</p>
+                  <span className="text-[10px] text-stone-500 block">단위: 개체/m²</span>
+                </div>
+                <div className="p-2.5 bg-white border-2 border-stone-300 space-y-1">
+                  <strong className="text-emerald-800 block text-xs">② 빈도 (Frequency)</strong>
+                  <p className="text-stone-700 font-mono text-[11px]">= (출현 방형구 수 ÷ {teamSize}) × 100</p>
+                  <span className="text-[10px] text-stone-500 block">단위: %</span>
+                </div>
+                <div className="p-2.5 bg-white border-2 border-stone-300 space-y-1">
+                  <strong className="text-emerald-800 block text-xs">③ 피도 (Coverage)</strong>
+                  <p className="text-stone-700 font-mono text-[11px]">= 차지 면적의 합(%) ÷ {teamSize}</p>
+                  <span className="text-[10px] text-stone-500 block">단위: %</span>
+                </div>
+                <div className="p-2.5 bg-white border-2 border-stone-300 space-y-1">
+                  <strong className="text-blue-800 block text-xs">④ 상대밀도 (RD)</strong>
+                  <p className="text-stone-700 font-mono text-[11px]">= (특정 종의 밀도 ÷ 총 밀도) × 100</p>
+                  <span className="text-[10px] text-stone-500 block">단위: % (합계: 100%)</span>
+                </div>
+                <div className="p-2.5 bg-white border-2 border-stone-300 space-y-1">
+                  <strong className="text-blue-800 block text-xs">⑤ 상대빈도 (RF)</strong>
+                  <p className="text-stone-700 font-mono text-[11px]">= (특정 종의 빈도 ÷ 총 빈도) × 100</p>
+                  <span className="text-[10px] text-stone-500 block">단위: % (합계: 100%)</span>
+                </div>
+                <div className="p-2.5 bg-white border-2 border-stone-300 space-y-1">
+                  <strong className="text-blue-800 block text-xs">⑥ 상대피도 (RC)</strong>
+                  <p className="text-stone-700 font-mono text-[11px]">= (특정 종의 피도 ÷ 총 피도) × 100</p>
+                  <span className="text-[10px] text-stone-500 block">단위: % (합계: 100%)</span>
+                </div>
+                <div className="p-2.5 bg-[#fefce8] border-2 border-amber-500 col-span-1 sm:col-span-2 lg:col-span-3 space-y-1">
+                  <strong className="text-amber-900 block font-bold text-xs">★ 중요치 (Importance Value, IV)</strong>
+                  <p className="text-stone-900 font-mono font-bold text-xs">
+                    = 상대밀도(%) + 상대빈도(%) + 상대피도(%)
+                  </p>
+                  <span className="text-[11px] text-stone-700 block">
+                    ※ 3대 상대값의 합이며, 중요치가 가장 높은 종이 그 군집의 <strong>우점종</strong>이 됩니다. (합계: 300)
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Quick Reference Ribbon: 2단계에서 계산한 합산 수치들 */}
@@ -584,7 +669,7 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
                         출현: <strong className="text-white">{stat.quadratOccurrences}개</strong>
                       </div>
                       <div>
-                        면적합: <strong className="text-white">{(stat.cover * teamSize).toFixed(1)}%</strong>
+                        면적합: <strong className="text-white">{Math.round(stat.cover * teamSize)}%</strong>
                       </div>
                     </div>
                   </div>
@@ -639,7 +724,7 @@ export const CommunityTableStep: React.FC<CommunityTableStepProps> = ({
                             </div>
                             <span className="text-stone-400">|</span>
                             <div className="text-stone-700">
-                              차지면적 합: <strong className="text-stone-900">{(trueStat.cover * teamSize).toFixed(1)}%</strong>
+                              차지면적 합: <strong className="text-stone-900">{Math.round(trueStat.cover * teamSize)}%</strong>
                             </div>
                           </div>
                         </div>

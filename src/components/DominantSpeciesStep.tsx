@@ -9,9 +9,9 @@ interface DominantSpeciesStepProps {
   stats: Record<PlantSpeciesId, SpeciesCommunityStat>;
   teamSize?: TeamSize;
   selectedSpecies: PlantSpeciesId | null;
-  reasoning: string;
+  reasoning?: string;
   onSelectSpecies: (sp: PlantSpeciesId) => void;
-  onChangeReasoning: (text: string) => void;
+  onChangeReasoning?: (text: string) => void;
   onProceedToFinalReport: () => void;
 }
 
@@ -19,9 +19,7 @@ export const DominantSpeciesStep: React.FC<DominantSpeciesStepProps> = ({
   stats,
   teamSize = 5,
   selectedSpecies,
-  reasoning,
   onSelectSpecies,
-  onChangeReasoning,
   onProceedToFinalReport,
 }) => {
   const [hasCheckedAnswer, setHasCheckedAnswer] = useState<boolean>(false);
@@ -40,13 +38,52 @@ export const DominantSpeciesStep: React.FC<DominantSpeciesStepProps> = ({
         <div className="flex items-center gap-2">
           <Award className="w-6 h-6 text-amber-600" />
           <h2 className="text-lg font-bold text-stone-900 pixel-font">
-            [3단계 우점종 결정 · 협동활동] 중요치(IV) 기반 풀밭 군집의 최종 우점종 결정
+            [3단계 우점종 판별 · 협동활동] 중요치(IV) 기반 풀밭 군집의 최종 우점종 결정
           </h2>
         </div>
         <p className="text-xs sm:text-sm text-stone-700 pixel-font leading-relaxed">
-          모둠원들과 3단계에서 조사·계산한 <strong>중요치(Importance Value, IV)</strong>를 종합하여,
-          이 풀밭 군집의 생태적 우위를 차지하는 <strong>우점종(Dominant species)</strong>을 최종 결정하고 그 이유를 작성해 보세요.
+          3단계에서 모둠원들과 함께 계산한 <strong>상대밀도, 상대빈도, 상대피도</strong> 및 <strong>중요치(Importance Value, IV)</strong>를 종합하여, 이 풀밭 군집을 대표하는 <strong>우점종(Dominant species)</strong>을 선택해 보세요.
         </p>
+      </div>
+
+      {/* Dominant Species Choice Prompt */}
+      <div className="bg-[#242b18] text-[#f7fee7] p-4 border-4 border-stone-900 shadow-[5px_5px_0px_#1c1917] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <span className="text-xl">🌿</span>
+          <div>
+            <h3 className="text-sm sm:text-base font-bold text-[#facc15] pixel-font">
+              우리 모둠이 판단한 우점종은?
+            </h3>
+            <p className="text-xs text-[#d9f99d] pixel-font mt-0.5">
+              아래 4개 식물 카드 중 중요치(IV)가 가장 높은 종을 선택한 후 [우점종 확인] 버튼을 누르세요.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          {!hasCheckedAnswer ? (
+            <button
+              type="button"
+              disabled={!selectedSpecies}
+              onClick={handleCheck}
+              className={`px-5 py-2.5 text-xs sm:text-sm font-bold border-2 border-black pixel-btn pixel-font cursor-pointer shadow-[2px_2px_0px_#000] ${
+                selectedSpecies
+                  ? 'bg-[#15803d] hover:bg-[#166534] text-white animate-pulse'
+                  : 'bg-stone-600 text-stone-400 cursor-not-allowed opacity-50'
+              }`}
+            >
+              우점종 확인
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setHasCheckedAnswer(false)}
+              className="px-3.5 py-2 text-xs font-bold text-stone-900 bg-[#fde047] hover:bg-[#facc15] border-2 border-black pixel-btn pixel-font cursor-pointer shadow-[2px_2px_0px_#000]"
+            >
+              다시 선택
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Species Selection Radio Cards */}
@@ -58,11 +95,11 @@ export const DominantSpeciesStep: React.FC<DominantSpeciesStepProps> = ({
 
           let cardBorder = 'border-stone-900 bg-white shadow-[3px_3px_0px_#1c1917] hover:bg-stone-50';
           if (isSelected) {
-            cardBorder = 'border-emerald-700 bg-emerald-50/80 shadow-[4px_4px_0px_#065f46]';
+            cardBorder = 'border-emerald-700 bg-emerald-50/80 shadow-[4px_4px_0px_#065f46] ring-2 ring-emerald-500';
           }
           if (hasCheckedAnswer) {
             if (isTrueDominant) {
-              cardBorder = 'border-emerald-700 bg-emerald-100 shadow-[5px_5px_0px_#065f46] ring-3 ring-emerald-600';
+              cardBorder = 'border-emerald-700 bg-emerald-100 shadow-[5px_5px_0px_#065f46] ring-4 ring-emerald-600';
             } else if (isSelected && !isCorrect) {
               cardBorder = 'border-rose-700 bg-rose-50 shadow-[4px_4px_0px_#be123c]';
             }
@@ -124,46 +161,12 @@ export const DominantSpeciesStep: React.FC<DominantSpeciesStepProps> = ({
               {hasCheckedAnswer && isTrueDominant && (
                 <div className="mt-2 text-xs font-bold text-emerald-800 flex items-center gap-1 pixel-font">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>★ 우점종 정답 (중요치 1위)</span>
+                  <span>★ 우점종 정답 (중요치 1위: {stat.importanceValue.toFixed(1)})</span>
                 </div>
               )}
             </div>
           );
         })}
-      </div>
-
-      {/* Student Reasoning Input */}
-      <div className="bg-[#fcfaf5] p-5 border-3 border-stone-900 shadow-[5px_5px_0px_#1c1917] space-y-3">
-        <label className="block text-sm font-bold text-stone-900 pixel-font">
-          우점종으로 선택한 이유를 작성해 보세요
-        </label>
-        <textarea
-          rows={3}
-          value={reasoning}
-          placeholder={`예: 4종의 식물 중 중요치(IV)가 ${stats[correctDominant].importanceValue.toFixed(1)}로 가장 높아, 풀밭 군집 전체에서 실질적인 점유 면적과 영향력이 가장 크기 때문입니다.`}
-          onChange={e => onChangeReasoning(e.target.value)}
-          className="w-full p-3 border-2 border-stone-900 text-xs sm:text-sm bg-white focus:outline-emerald-600 leading-relaxed pixel-font font-mono"
-        />
-        <div className="flex justify-end">
-          {!hasCheckedAnswer ? (
-            <button
-              type="button"
-              disabled={!selectedSpecies}
-              onClick={handleCheck}
-              className={`px-5 py-2.5 text-xs font-bold border-2 border-stone-900 pixel-btn pixel-font cursor-pointer ${
-                selectedSpecies
-                  ? 'bg-[#15803d] hover:bg-[#166534] text-white'
-                  : 'bg-stone-200 text-stone-400 cursor-not-allowed'
-              }`}
-            >
-              우점종 판별 결과 확인하기
-            </button>
-          ) : (
-            <span className="text-xs font-bold text-emerald-900 pixel-font bg-emerald-100 px-3 py-1 border-2 border-emerald-700">
-              판별 확인 완료 ✓
-            </span>
-          )}
-        </div>
       </div>
 
       {/* Explanation Banner after Check */}
@@ -173,15 +176,15 @@ export const DominantSpeciesStep: React.FC<DominantSpeciesStepProps> = ({
             {isCorrect ? (
               <>
                 <CheckCircle2 className="w-6 h-6 text-emerald-600" />
-                <h3 className="font-bold text-emerald-950 text-sm sm:text-base pixel-font">
-                  🎉 정답입니다! {PLANT_SPECIES[correctDominant].koreanName}이(가) 이 풀밭의 우점종입니다!
+                <h3 className="font-bold text-emerald-950 text-base pixel-font">
+                  🎉 정답입니다! {PLANT_SPECIES[correctDominant].koreanName}이(가) 이 풀밭 군집의 우점종입니다!
                 </h3>
               </>
             ) : (
               <>
                 <XCircle className="w-6 h-6 text-rose-600" />
-                <h3 className="font-bold text-stone-900 text-sm sm:text-base pixel-font">
-                  다시 확인해 보세요! 정답은 {PLANT_SPECIES[correctDominant].koreanName}입니다.
+                <h3 className="font-bold text-stone-900 text-base pixel-font">
+                  다시 확인해 보세요! 실제 우점종은 중요치 1위인 {PLANT_SPECIES[correctDominant].koreanName}입니다.
                 </h3>
               </>
             )}
@@ -189,13 +192,13 @@ export const DominantSpeciesStep: React.FC<DominantSpeciesStepProps> = ({
 
           <div className="text-xs text-stone-800 leading-relaxed space-y-2 bg-[#f0fdf4] p-3.5 border-2 border-emerald-700 pixel-font">
             <p className="font-bold text-emerald-950">
-              💡 중요치(Importance Value)와 우점종 판별의 생태적 기준:
+              💡 중요치(Importance Value)와 우점종 판별의 핵심 생태적 원리:
             </p>
             <p>
-              단순히 머릿수(개체수)만 많다고 해서 군집의 우점종이 되는 것은 아닙니다. 강아지풀은 개체수가 많았으나, 잎이 가늘어 풀밭 표면을 덮는 면적(피도)이 좁았습니다.
+              • <strong>개체수 오류 발견:</strong> 강아지풀은 총 개체수가 {teamSize === 4 ? '18개체' : '26개체'}로 가장 많아 상대밀도({stats.foxtail.relativeDensity.toFixed(1)}%) 1위를 차지했으나, 잎이 가늘어 풀밭 표면을 덮는 피도(상대피도 {stats.foxtail.relativeCover.toFixed(1)}%)가 매우 낮고, 출현하지 않은 방형구도 있어 상대빈도({stats.foxtail.relativeFrequency.toFixed(1)}%)도 낮았습니다.
             </p>
             <p>
-              반면 <strong>{PLANT_SPECIES[correctDominant].koreanName}</strong>은 둥근 잎으로 지표면을 덮는 피도(상대피도 1위)와 모든 방형구에 나타나는 높은 출현 빈도(100%)를 바탕으로, 세 상대값을 종합한 <strong>중요치(IV: {stats[correctDominant].importanceValue.toFixed(1)})</strong>에서 최고점을 기록하여 군집의 외관과 생태적 기능을 지배하는 <strong>우점종</strong>으로 판정됩니다!
+              • <strong>실제 우점종:</strong> 반면 <strong>{PLANT_SPECIES[correctDominant].koreanName}</strong>은(는) 둥근 잎으로 지표면을 덮는 면적(상대피도 {stats[correctDominant].relativeCover.toFixed(1)}%)에서 압도적 1위이며 모든 방형구에 출현하여 상대빈도({stats[correctDominant].relativeFrequency.toFixed(1)}%)도 1위였습니다. 따라서 세 상대값을 합산한 <strong>중요치(IV: {stats[correctDominant].importanceValue.toFixed(1)})</strong>에서 최고점을 기록하여 군집의 외관과 생태적 기능을 지배하는 <strong>진짜 우점종</strong>입니다!
             </p>
           </div>
 
@@ -206,7 +209,7 @@ export const DominantSpeciesStep: React.FC<DominantSpeciesStepProps> = ({
               onClick={onProceedToFinalReport}
               className="flex items-center gap-2 px-6 py-3 bg-[#15803d] hover:bg-[#166534] text-white font-bold text-xs sm:text-sm border-2 border-stone-900 pixel-btn cursor-pointer pixel-font shadow-[3px_3px_0px_#000]"
             >
-              <span>모둠 종합 분석 리포트 및 탐구 토론 확인하기 [NEXT]</span>
+              <span>모둠 종합 분석 리포트 및 협동 탐구 토론 이동 [NEXT]</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

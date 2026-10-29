@@ -96,27 +96,27 @@ export const FinalReportStep: React.FC<FinalReportStepProps> = ({
   const groupQuestions = [
     {
       id: 0,
-      question: `1. 개체수가 가장 많은 종과 실제 우점종(${PLANT_SPECIES[dominantSpecies].koreanName})이 다른 이유는 무엇일까요?`,
+      question: '1. 우리 모둠의 조사 결과에서 우점종은 무엇이며, 그렇게 생각한 이유는 무엇일까요?',
       answer:
-        `강아지풀은 개체수가 많아 상대밀도에서는 상위권이었으나, 잎이 가늘어 지표면을 덮는 피도가 낮았습니다. 반면 ${PLANT_SPECIES[dominantSpecies].koreanName}은(는) 개체수도 충분할 뿐만 아니라 둥근 잎으로 바닥을 덮는 피도와 모든 방형구에 출현하는 빈도(100%)가 매우 높아, 세 지표를 모두 합산한 중요치(IV: ${stats[dominantSpecies].importanceValue.toFixed(1)})에서 1위를 차지하여 우점종이 되었습니다.`,
+        `우리 모둠의 조사 결과 최종 우점종은 ${PLANT_SPECIES[dominantSpecies].koreanName}입니다. 상대밀도(${stats[dominantSpecies].relativeDensity.toFixed(1)}%), 상대빈도(${stats[dominantSpecies].relativeFrequency.toFixed(1)}%), 상대피도(${stats[dominantSpecies].relativeCover.toFixed(1)}%)를 모두 합산한 중요치(IV)가 ${stats[dominantSpecies].importanceValue.toFixed(1)}로 가장 높기 때문입니다.`,
     },
     {
       id: 1,
-      question: `2. 방형구 1개만 조사했을 때와 ${teamSize}개를 종합했을 때 어떤 차이가 있을까요?`,
+      question: '2. 개체수가 가장 많은 종은 무엇이며, 개체수가 많은 종이 실제 우점종과 다른 이유는 무엇일까요?',
       answer:
-        `방형구 1개만 조사하면 우연히 그 자리에 많이 자라던 종만 높게 측정되어 군집 전체의 특성을 심각하게 왜곡할 수 있습니다. 무작위로 선정된 ${teamSize}개의 방형구를 골고루 합산하여 조사함으로써 우연에 의한 표본 오차(Sampling error)를 획기적으로 줄이고 전체 풀밭의 신뢰할 수 있는 평균치를 얻을 수 있습니다.`,
+        `개체수가 가장 많은 종은 강아지풀(총 ${teamSize === 4 ? '18개체' : '26개체'}, 상대밀도 ${stats.foxtail.relativeDensity.toFixed(1)}%)입니다. 하지만 강아지풀은 잎이 가늘어 지표면을 덮는 피도가 낮고(상대피도 ${stats.foxtail.relativeCover.toFixed(1)}%), 특정 방형구에만 출현하여 상대빈도(${stats.foxtail.relativeFrequency.toFixed(1)}%)도 낮았습니다. 반면 토끼풀은 개체수가 강아지풀보다 적더라도 모든 방형구에 골고루 출현하고(상대빈도 ${stats.clover.relativeFrequency.toFixed(1)}%), 넓은 잎으로 지표면을 많이 덮어(상대피도 ${stats.clover.relativeCover.toFixed(1)}%) 중요치 합산에서 1위를 차지했습니다. 따라서 단순히 개체수(밀도)만으로 우점종을 판단하면 군집의 실질적 지배종을 왜곡할 수 있습니다.`,
     },
     {
       id: 2,
-      question: '3. 피도(지상부 투영 면적)가 중요치와 군집 외관에 미치는 생태적 의미는 무엇일까요?',
+      question: `3. 방형구 1개만 조사했을 때와 ${teamSize}개를 종합했을 때 어떤 차이가 있을까요?`,
       answer:
-        '식물 군집에서 햇빛을 흡수하고 군집의 물리적 외관(경관)을 지배하는 데는 개체의 머릿수보다 식물체가 지표면을 덮는 면적(피도)이 결정적인 역할을 합니다. 중요치에 피도가 포함되는 이유도 군집 내 실질적 점유 면적을 반영하기 위함입니다.',
+        `방형구 1개만 조사하면 우연히 그 자리에 많이 자라던 종만 높게 측정되어 군집 전체의 특성을 왜곡할 수 있습니다. 무작위로 선정한 ${teamSize}개의 방형구를 골고루 합산하여 조사함으로써 우연에 의한 표본 오차(Sampling error)를 줄이고 전체 풀밭의 신뢰할 수 있는 평균적 식물 분포를 파악할 수 있습니다.`,
     },
     {
       id: 3,
-      question: `4. ${teamSize}인 1모둠으로 각자 방형구를 분담하여 조사했을 때의 과학 탐구적 장점은 무엇일까요?`,
+      question: '4. 각자 방형구를 분담하여 조사했을 때 과학 탐구적 장점은 무엇일까요?',
       answer:
-        `혼자서 ${teamSize}개의 방형구를 모두 조사하려면 시간이 오래 걸리고 집중력이 흐려질 수 있습니다. 모둠원 ${teamSize}명이 1개씩 분담하여 정밀하게 조사한 뒤 자료를 종합하면, 조사 시간을 획기적으로 단축하면서도 높은 정확도와 협동적 과학 탐구 능력을 기를 수 있습니다.`,
+        `혼자서 ${teamSize}개의 방형구를 모두 세고 측정하려면 시간이 오래 걸리고 관찰 집중력이 흐려질 수 있습니다. 모둠원들이 1개씩 방형구를 분담하여 정밀하게 조사한 뒤 자료를 종합하면, 조사 시간을 획기적으로 단축하면서도 관찰의 정확도를 높이고 협동을 통한 과학적 데이터 분석 능력을 기를 수 있습니다.`,
     },
   ];
 
@@ -524,6 +524,73 @@ export const FinalReportStep: React.FC<FinalReportStepProps> = ({
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Comprehensive Final Community Calculation Table for Easy Reference */}
+      <div className="bg-[#fcfaf5] p-5 border-4 border-stone-900 shadow-[5px_5px_0px_#1c1917] space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b-2 border-stone-800 pb-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xl">📊</span>
+            <h3 className="text-base font-bold text-stone-900 pixel-font">
+              풀밭 식물 군집 종합 계산 결과표 (토론 참고용)
+            </h3>
+          </div>
+          <span className="text-xs text-stone-600 pixel-font">
+            총 {teamSize}개 방형구 종합 데이터 ({teamSize}m² 표본)
+          </span>
+        </div>
+
+        <div className="overflow-x-auto border-2 border-stone-800">
+          <table className="w-full text-xs pixel-font border-collapse">
+            <thead>
+              <tr className="bg-[#242b18] text-white">
+                <th className="p-2 border border-stone-700 text-left">식물 종</th>
+                <th className="p-2 border border-stone-700 text-center">밀도 (개체/m²)</th>
+                <th className="p-2 border border-stone-700 text-center">빈도 (%)</th>
+                <th className="p-2 border border-stone-700 text-center">피도 (%)</th>
+                <th className="p-2 border border-stone-700 text-center bg-[#1e3a1f]">상대밀도 (%)</th>
+                <th className="p-2 border border-stone-700 text-center bg-[#1e3a1f]">상대빈도 (%)</th>
+                <th className="p-2 border border-stone-700 text-center bg-[#1e3a1f]">상대피도 (%)</th>
+                <th className="p-2 border border-stone-700 text-center bg-[#451a03] text-[#fef08a]">중요치 (IV)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {PLANT_SPECIES_LIST.map(spec => {
+                const s = stats[spec.id];
+                const isDom = spec.id === dominantSpecies;
+                return (
+                  <tr
+                    key={spec.id}
+                    className={`text-stone-900 ${
+                      isDom ? 'bg-[#fef9c3] font-bold' : 'bg-white hover:bg-stone-50'
+                    }`}
+                  >
+                    <td className="p-2 border border-stone-300">
+                      <div className="flex items-center gap-1.5">
+                        <BotanicalIcon species={spec.id} size={18} />
+                        <span>{spec.koreanName}</span>
+                        {isDom && (
+                          <span className="text-[10px] bg-amber-200 text-amber-900 px-1 border border-amber-600 font-extrabold">
+                            ★우점종
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="p-2 border border-stone-300 text-center font-mono">{s.density.toFixed(2)}</td>
+                    <td className="p-2 border border-stone-300 text-center font-mono">{s.frequency.toFixed(2)}%</td>
+                    <td className="p-2 border border-stone-300 text-center font-mono">{s.cover.toFixed(2)}%</td>
+                    <td className="p-2 border border-stone-300 text-center font-mono bg-emerald-50/50">{s.relativeDensity.toFixed(2)}%</td>
+                    <td className="p-2 border border-stone-300 text-center font-mono bg-emerald-50/50">{s.relativeFrequency.toFixed(2)}%</td>
+                    <td className="p-2 border border-stone-300 text-center font-mono bg-emerald-50/50">{s.relativeCover.toFixed(2)}%</td>
+                    <td className="p-2 border border-stone-300 text-center font-mono font-bold text-amber-700 bg-amber-50">
+                      {s.importanceValue.toFixed(2)}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
 

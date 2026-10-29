@@ -67,13 +67,19 @@ export default function App() {
   const [dominantReasoning, setDominantReasoning] = useState<string>('');
   const [inspectingQuadratId, setInspectingQuadratId] = useState<number | null>(null);
 
+  const VALID_GROUPS = ['1모둠', '2모둠', '3모둠', '4모둠', '5모둠'];
+
   // 3. Load from localStorage once on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.groupId) setGroupId(parsed.groupId);
+        if (parsed.groupId && VALID_GROUPS.includes(parsed.groupId)) {
+          setGroupId(parsed.groupId);
+        } else {
+          setGroupId('1모둠');
+        }
         if (parsed.studentName) setStudentName(parsed.studentName);
         if (parsed.teamSize === 4 || parsed.teamSize === 5) setTeamSize(parsed.teamSize);
         if (parsed.assignedQuadratId) setAssignedQuadratId(parsed.assignedQuadratId);
@@ -236,11 +242,12 @@ export default function App() {
   };
 
   const handleChangeGroupId = (newGroupId: string) => {
-    const trimmed = newGroupId.trim() || '1모둠';
-    setGroupId(trimmed);
+    const trimmed = newGroupId.trim();
+    const validGroup = VALID_GROUPS.includes(trimmed) ? trimmed : '1모둠';
+    setGroupId(validGroup);
     setInspections({});
     setRemoteMemberNames({});
-    initGroupConfig(trimmed, teamSize);
+    initGroupConfig(validGroup, teamSize);
   };
 
   const handleChangeStudentName = (name: string) => {

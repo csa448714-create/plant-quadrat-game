@@ -1,7 +1,7 @@
 import { PlantIndividual, Quadrat, TrueQuadratStat } from '../types/ecology';
 
 /**
- * 고등학교 생명과학 5인 1모둠 협동 학습용 완전 고정 식물 군집 데이터
+ * 고등학교 생명과학 4인/5인 협동 학습용 완전 고정 식물 군집 데이터
  * 모든 학생이 어느 기기에서 접속하더라도 100% 동일한 식물 분포를 가집니다.
  */
 export const FIXED_PLANTS: PlantIndividual[] = [
@@ -24,39 +24,12 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-clover-3",
-    "species": "clover",
-    "x": 219,
-    "y": 286,
-    "radius": 13,
-    "rotation": 275,
-    "variety": 0
-  },
-  {
     "id": "plant-clover-4",
     "species": "clover",
     "x": 99,
     "y": 122,
     "radius": 13,
     "rotation": 108,
-    "variety": 2
-  },
-  {
-    "id": "plant-clover-5",
-    "species": "clover",
-    "x": 490,
-    "y": 235,
-    "radius": 12,
-    "rotation": 142,
-    "variety": 2
-  },
-  {
-    "id": "plant-clover-6",
-    "species": "clover",
-    "x": 184,
-    "y": 365,
-    "radius": 13,
-    "rotation": 66,
     "variety": 2
   },
   {
@@ -78,24 +51,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-clover-9",
-    "species": "clover",
-    "x": 139,
-    "y": 376,
-    "radius": 13,
-    "rotation": 6,
-    "variety": 2
-  },
-  {
-    "id": "plant-clover-10",
-    "species": "clover",
-    "x": 513,
-    "y": 269,
-    "radius": 13,
-    "rotation": 9,
-    "variety": 2
-  },
-  {
     "id": "plant-clover-11",
     "species": "clover",
     "x": 212,
@@ -105,39 +60,12 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-clover-12",
-    "species": "clover",
-    "x": 261,
-    "y": 172,
-    "radius": 13,
-    "rotation": 70,
-    "variety": 1
-  },
-  {
-    "id": "plant-clover-13",
-    "species": "clover",
-    "x": 289,
-    "y": 293,
-    "radius": 12,
-    "rotation": 218,
-    "variety": 0
-  },
-  {
     "id": "plant-clover-14",
     "species": "clover",
     "x": 40,
     "y": 345,
     "radius": 13,
     "rotation": 230,
-    "variety": 2
-  },
-  {
-    "id": "plant-clover-15",
-    "species": "clover",
-    "x": 252,
-    "y": 230,
-    "radius": 10,
-    "rotation": 37,
     "variety": 2
   },
   {
@@ -291,24 +219,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "y": 251,
     "radius": 10,
     "rotation": 162,
-    "variety": 2
-  },
-  {
-    "id": "plant-clover-33",
-    "species": "clover",
-    "x": 159,
-    "y": 282,
-    "radius": 12,
-    "rotation": 318,
-    "variety": 2
-  },
-  {
-    "id": "plant-clover-34",
-    "species": "clover",
-    "x": 250,
-    "y": 271,
-    "radius": 10,
-    "rotation": 55,
     "variety": 2
   },
   {
@@ -483,15 +393,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 1
   },
   {
-    "id": "plant-clover-54",
-    "species": "clover",
-    "x": 623,
-    "y": 443,
-    "radius": 13,
-    "rotation": 321,
-    "variety": 1
-  },
-  {
     "id": "plant-clover-55",
     "species": "clover",
     "x": 569,
@@ -517,15 +418,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 13,
     "rotation": 266,
     "variety": 1
-  },
-  {
-    "id": "plant-clover-58",
-    "species": "clover",
-    "x": 660,
-    "y": 428,
-    "radius": 12,
-    "rotation": 144,
-    "variety": 2
   },
   {
     "id": "plant-clover-59",
@@ -724,15 +616,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 10,
     "rotation": 257,
     "variety": 0
-  },
-  {
-    "id": "plant-clover-81",
-    "species": "clover",
-    "x": 505,
-    "y": 209,
-    "radius": 13,
-    "rotation": 85,
-    "variety": 1
   },
   {
     "id": "plant-clover-82",
@@ -996,15 +879,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-dandelion-111",
-    "species": "dandelion",
-    "x": 557,
-    "y": 423,
-    "radius": 9,
-    "rotation": 193,
-    "variety": 2
-  },
-  {
     "id": "plant-dandelion-112",
     "species": "dandelion",
     "x": 117,
@@ -1059,42 +933,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 1
   },
   {
-    "id": "plant-dandelion-118",
-    "species": "dandelion",
-    "x": 82,
-    "y": 488,
-    "radius": 9,
-    "rotation": 203,
-    "variety": 1
-  },
-  {
-    "id": "plant-dandelion-119",
-    "species": "dandelion",
-    "x": 180,
-    "y": 141,
-    "radius": 12,
-    "rotation": 259,
-    "variety": 2
-  },
-  {
-    "id": "plant-dandelion-120",
-    "species": "dandelion",
-    "x": 450,
-    "y": 608,
-    "radius": 10,
-    "rotation": 34,
-    "variety": 2
-  },
-  {
-    "id": "plant-dandelion-121",
-    "species": "dandelion",
-    "x": 97,
-    "y": 401,
-    "radius": 10,
-    "rotation": 286,
-    "variety": 2
-  },
-  {
     "id": "plant-dandelion-122",
     "species": "dandelion",
     "x": 492,
@@ -1119,15 +957,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "y": 311,
     "radius": 11,
     "rotation": 168,
-    "variety": 2
-  },
-  {
-    "id": "plant-dandelion-125",
-    "species": "dandelion",
-    "x": 415,
-    "y": 679,
-    "radius": 11,
-    "rotation": 151,
     "variety": 2
   },
   {
@@ -1158,30 +987,12 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-dandelion-129",
-    "species": "dandelion",
-    "x": 186,
-    "y": 188,
-    "radius": 12,
-    "rotation": 204,
-    "variety": 1
-  },
-  {
     "id": "plant-dandelion-130",
     "species": "dandelion",
     "x": 59,
     "y": 222,
     "radius": 11,
     "rotation": 247,
-    "variety": 1
-  },
-  {
-    "id": "plant-dandelion-131",
-    "species": "dandelion",
-    "x": 461,
-    "y": 645,
-    "radius": 9,
-    "rotation": 267,
     "variety": 1
   },
   {
@@ -1255,15 +1066,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 11,
     "rotation": 95,
     "variety": 2
-  },
-  {
-    "id": "plant-dandelion-140",
-    "species": "dandelion",
-    "x": 161,
-    "y": 236,
-    "radius": 10,
-    "rotation": 259,
-    "variety": 0
   },
   {
     "id": "plant-dandelion-141",
@@ -1347,15 +1149,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-dandelion-150",
-    "species": "dandelion",
-    "x": 389,
-    "y": 571,
-    "radius": 11,
-    "rotation": 301,
-    "variety": 0
-  },
-  {
     "id": "plant-dandelion-151",
     "species": "dandelion",
     "x": 276,
@@ -1363,15 +1156,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 9,
     "rotation": 76,
     "variety": 0
-  },
-  {
-    "id": "plant-dandelion-152",
-    "species": "dandelion",
-    "x": 473,
-    "y": 336,
-    "radius": 10,
-    "rotation": 61,
-    "variety": 2
   },
   {
     "id": "plant-dandelion-153",
@@ -1398,15 +1182,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "y": 494,
     "radius": 11,
     "rotation": 193,
-    "variety": 1
-  },
-  {
-    "id": "plant-dandelion-156",
-    "species": "dandelion",
-    "x": 382,
-    "y": 692,
-    "radius": 9,
-    "rotation": 190,
     "variety": 1
   },
   {
@@ -1446,15 +1221,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 1
   },
   {
-    "id": "plant-dandelion-161",
-    "species": "dandelion",
-    "x": 439,
-    "y": 268,
-    "radius": 9,
-    "rotation": 48,
-    "variety": 1
-  },
-  {
     "id": "plant-dandelion-162",
     "species": "dandelion",
     "x": 284,
@@ -1482,15 +1248,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-dandelion-165",
-    "species": "dandelion",
-    "x": 139,
-    "y": 420,
-    "radius": 12,
-    "rotation": 113,
-    "variety": 1
-  },
-  {
     "id": "plant-dandelion-166",
     "species": "dandelion",
     "x": 674,
@@ -1500,15 +1257,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-dandelion-167",
-    "species": "dandelion",
-    "x": 597,
-    "y": 483,
-    "radius": 9,
-    "rotation": 198,
-    "variety": 1
-  },
-  {
     "id": "plant-dandelion-168",
     "species": "dandelion",
     "x": 530,
@@ -1516,24 +1264,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 10,
     "rotation": 303,
     "variety": 1
-  },
-  {
-    "id": "plant-dandelion-169",
-    "species": "dandelion",
-    "x": 423,
-    "y": 329,
-    "radius": 12,
-    "rotation": 93,
-    "variety": 1
-  },
-  {
-    "id": "plant-dandelion-170",
-    "species": "dandelion",
-    "x": 449,
-    "y": 195,
-    "radius": 9,
-    "rotation": 159,
-    "variety": 0
   },
   {
     "id": "plant-dandelion-171",
@@ -1597,24 +1327,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 11,
     "rotation": 316,
     "variety": 2
-  },
-  {
-    "id": "plant-dandelion-178",
-    "species": "dandelion",
-    "x": 517,
-    "y": 238,
-    "radius": 10,
-    "rotation": 211,
-    "variety": 2
-  },
-  {
-    "id": "plant-dandelion-179",
-    "species": "dandelion",
-    "x": 115,
-    "y": 460,
-    "radius": 12,
-    "rotation": 46,
-    "variety": 0
   },
   {
     "id": "plant-dandelion-180",
@@ -1695,15 +1407,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "y": 34,
     "radius": 10,
     "rotation": 334,
-    "variety": 2
-  },
-  {
-    "id": "plant-dandelion-189",
-    "species": "dandelion",
-    "x": 399,
-    "y": 539,
-    "radius": 11,
-    "rotation": 244,
     "variety": 2
   },
   {
@@ -1815,15 +1518,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-violet-202",
-    "species": "violet",
-    "x": 495,
-    "y": 683,
-    "radius": 10,
-    "rotation": 307,
-    "variety": 2
-  },
-  {
     "id": "plant-violet-203",
     "species": "violet",
     "x": 702,
@@ -1839,15 +1533,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "y": 540,
     "radius": 10,
     "rotation": 172,
-    "variety": 0
-  },
-  {
-    "id": "plant-violet-205",
-    "species": "violet",
-    "x": 259,
-    "y": 204,
-    "radius": 11,
-    "rotation": 313,
     "variety": 0
   },
   {
@@ -1884,15 +1569,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "y": 576,
     "radius": 12,
     "rotation": 119,
-    "variety": 2
-  },
-  {
-    "id": "plant-violet-210",
-    "species": "violet",
-    "x": 598,
-    "y": 364,
-    "radius": 13,
-    "rotation": 24,
     "variety": 2
   },
   {
@@ -1950,15 +1626,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-violet-217",
-    "species": "violet",
-    "x": 193,
-    "y": 257,
-    "radius": 11,
-    "rotation": 292,
-    "variety": 0
-  },
-  {
     "id": "plant-violet-218",
     "species": "violet",
     "x": 764,
@@ -1968,42 +1635,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 1
   },
   {
-    "id": "plant-violet-219",
-    "species": "violet",
-    "x": 648,
-    "y": 462,
-    "radius": 13,
-    "rotation": 332,
-    "variety": 1
-  },
-  {
-    "id": "plant-violet-220",
-    "species": "violet",
-    "x": 571,
-    "y": 476,
-    "radius": 12,
-    "rotation": 84,
-    "variety": 2
-  },
-  {
-    "id": "plant-violet-221",
-    "species": "violet",
-    "x": 582,
-    "y": 419,
-    "radius": 12,
-    "rotation": 249,
-    "variety": 2
-  },
-  {
-    "id": "plant-violet-222",
-    "species": "violet",
-    "x": 689,
-    "y": 486,
-    "radius": 11,
-    "rotation": 218,
-    "variety": 0
-  },
-  {
     "id": "plant-violet-223",
     "species": "violet",
     "x": 713,
@@ -2011,15 +1642,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 11,
     "rotation": 65,
     "variety": 2
-  },
-  {
-    "id": "plant-violet-224",
-    "species": "violet",
-    "x": 213,
-    "y": 224,
-    "radius": 13,
-    "rotation": 93,
-    "variety": 0
   },
   {
     "id": "plant-violet-225",
@@ -2056,15 +1678,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 12,
     "rotation": 99,
     "variety": 2
-  },
-  {
-    "id": "plant-violet-229",
-    "species": "violet",
-    "x": 228,
-    "y": 256,
-    "radius": 13,
-    "rotation": 297,
-    "variety": 1
   },
   {
     "id": "plant-violet-230",
@@ -2202,15 +1815,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-violet-245",
-    "species": "violet",
-    "x": 182,
-    "y": 436,
-    "radius": 11,
-    "rotation": 221,
-    "variety": 0
-  },
-  {
     "id": "plant-violet-246",
     "species": "violet",
     "x": 332,
@@ -2238,15 +1842,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-violet-249",
-    "species": "violet",
-    "x": 70,
-    "y": 392,
-    "radius": 10,
-    "rotation": 315,
-    "variety": 2
-  },
-  {
     "id": "plant-violet-250",
     "species": "violet",
     "x": 75,
@@ -2262,24 +1857,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "y": 549,
     "radius": 12,
     "rotation": 306,
-    "variety": 2
-  },
-  {
-    "id": "plant-violet-252",
-    "species": "violet",
-    "x": 292,
-    "y": 241,
-    "radius": 11,
-    "rotation": 222,
-    "variety": 2
-  },
-  {
-    "id": "plant-violet-253",
-    "species": "violet",
-    "x": 675,
-    "y": 458,
-    "radius": 11,
-    "rotation": 184,
     "variety": 2
   },
   {
@@ -2316,15 +1893,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "y": 217,
     "radius": 13,
     "rotation": 54,
-    "variety": 0
-  },
-  {
-    "id": "plant-violet-258",
-    "species": "violet",
-    "x": 562,
-    "y": 378,
-    "radius": 13,
-    "rotation": 274,
     "variety": 0
   },
   {
@@ -2445,33 +2013,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-violet-272",
-    "species": "violet",
-    "x": 685,
-    "y": 398,
-    "radius": 13,
-    "rotation": 229,
-    "variety": 1
-  },
-  {
-    "id": "plant-violet-273",
-    "species": "violet",
-    "x": 367,
-    "y": 660,
-    "radius": 10,
-    "rotation": 188,
-    "variety": 2
-  },
-  {
-    "id": "plant-violet-274",
-    "species": "violet",
-    "x": 647,
-    "y": 394,
-    "radius": 13,
-    "rotation": 1,
-    "variety": 1
-  },
-  {
     "id": "plant-violet-275",
     "species": "violet",
     "x": 389,
@@ -2497,15 +2038,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 13,
     "rotation": 43,
     "variety": 0
-  },
-  {
-    "id": "plant-violet-278",
-    "species": "violet",
-    "x": 491,
-    "y": 587,
-    "radius": 10,
-    "rotation": 216,
-    "variety": 1
   },
   {
     "id": "plant-violet-279",
@@ -2542,15 +2074,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 10,
     "rotation": 37,
     "variety": 2
-  },
-  {
-    "id": "plant-violet-283",
-    "species": "violet",
-    "x": 471,
-    "y": 288,
-    "radius": 11,
-    "rotation": 220,
-    "variety": 1
   },
   {
     "id": "plant-violet-284",
@@ -2652,15 +2175,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-foxtail-295",
-    "species": "foxtail",
-    "x": 70,
-    "y": 506,
-    "radius": 9,
-    "rotation": 6,
-    "variety": 1
-  },
-  {
     "id": "plant-foxtail-296",
     "species": "foxtail",
     "x": 530,
@@ -2677,15 +2191,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 11,
     "rotation": 313,
     "variety": 2
-  },
-  {
-    "id": "plant-foxtail-298",
-    "species": "foxtail",
-    "x": 420,
-    "y": 210,
-    "radius": 9,
-    "rotation": 62,
-    "variety": 0
   },
   {
     "id": "plant-foxtail-299",
@@ -2751,15 +2256,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-foxtail-306",
-    "species": "foxtail",
-    "x": 498,
-    "y": 295,
-    "radius": 11,
-    "rotation": 357,
-    "variety": 0
-  },
-  {
     "id": "plant-foxtail-307",
     "species": "foxtail",
     "x": 434,
@@ -2776,33 +2272,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 11,
     "rotation": 307,
     "variety": 1
-  },
-  {
-    "id": "plant-foxtail-309",
-    "species": "foxtail",
-    "x": 444,
-    "y": 671,
-    "radius": 11,
-    "rotation": 228,
-    "variety": 1
-  },
-  {
-    "id": "plant-foxtail-310",
-    "species": "foxtail",
-    "x": 79,
-    "y": 434,
-    "radius": 11,
-    "rotation": 243,
-    "variety": 2
-  },
-  {
-    "id": "plant-foxtail-311",
-    "species": "foxtail",
-    "x": 393,
-    "y": 639,
-    "radius": 11,
-    "rotation": 4,
-    "variety": 2
   },
   {
     "id": "plant-foxtail-312",
@@ -2884,24 +2353,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 9,
     "rotation": 38,
     "variety": 2
-  },
-  {
-    "id": "plant-foxtail-321",
-    "species": "foxtail",
-    "x": 420,
-    "y": 619,
-    "radius": 10,
-    "rotation": 231,
-    "variety": 2
-  },
-  {
-    "id": "plant-foxtail-322",
-    "species": "foxtail",
-    "x": 497,
-    "y": 647,
-    "radius": 10,
-    "rotation": 106,
-    "variety": 0
   },
   {
     "id": "plant-foxtail-323",
@@ -3102,15 +2553,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-foxtail-345",
-    "species": "foxtail",
-    "x": 385,
-    "y": 265,
-    "radius": 11,
-    "rotation": 199,
-    "variety": 2
-  },
-  {
     "id": "plant-foxtail-346",
     "species": "foxtail",
     "x": 702,
@@ -3145,15 +2587,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 10,
     "rotation": 29,
     "variety": 2
-  },
-  {
-    "id": "plant-foxtail-350",
-    "species": "foxtail",
-    "x": 134,
-    "y": 494,
-    "radius": 9,
-    "rotation": 325,
-    "variety": 0
   },
   {
     "id": "plant-foxtail-351",
@@ -3210,39 +2643,12 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-foxtail-357",
-    "species": "foxtail",
-    "x": 402,
-    "y": 310,
-    "radius": 10,
-    "rotation": 226,
-    "variety": 1
-  },
-  {
     "id": "plant-foxtail-358",
     "species": "foxtail",
     "x": 219,
     "y": 608,
     "radius": 10,
     "rotation": 11,
-    "variety": 2
-  },
-  {
-    "id": "plant-foxtail-359",
-    "species": "foxtail",
-    "x": 157,
-    "y": 208,
-    "radius": 9,
-    "rotation": 120,
-    "variety": 1
-  },
-  {
-    "id": "plant-foxtail-360",
-    "species": "foxtail",
-    "x": 149,
-    "y": 175,
-    "radius": 11,
-    "rotation": 96,
     "variety": 2
   },
   {
@@ -3345,15 +2751,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-foxtail-372",
-    "species": "foxtail",
-    "x": 472,
-    "y": 191,
-    "radius": 10,
-    "rotation": 273,
-    "variety": 0
-  },
-  {
     "id": "plant-foxtail-373",
     "species": "foxtail",
     "x": 856,
@@ -3444,15 +2841,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-foxtail-383",
-    "species": "foxtail",
-    "x": 422,
-    "y": 558,
-    "radius": 9,
-    "rotation": 230,
-    "variety": 1
-  },
-  {
     "id": "plant-foxtail-384",
     "species": "foxtail",
     "x": 262,
@@ -3469,24 +2857,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 11,
     "rotation": 220,
     "variety": 2
-  },
-  {
-    "id": "plant-foxtail-386",
-    "species": "foxtail",
-    "x": 179,
-    "y": 484,
-    "radius": 11,
-    "rotation": 310,
-    "variety": 2
-  },
-  {
-    "id": "plant-foxtail-387",
-    "species": "foxtail",
-    "x": 596,
-    "y": 443,
-    "radius": 9,
-    "rotation": 129,
-    "variety": 0
   },
   {
     "id": "plant-foxtail-388",
@@ -3514,15 +2884,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 9,
     "rotation": 27,
     "variety": 1
-  },
-  {
-    "id": "plant-foxtail-391",
-    "species": "foxtail",
-    "x": 368,
-    "y": 596,
-    "radius": 10,
-    "rotation": 319,
-    "variety": 2
   },
   {
     "id": "plant-foxtail-392",
@@ -3561,24 +2922,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-foxtail-396",
-    "species": "foxtail",
-    "x": 364,
-    "y": 545,
-    "radius": 10,
-    "rotation": 178,
-    "variety": 2
-  },
-  {
-    "id": "plant-foxtail-397",
-    "species": "foxtail",
-    "x": 211,
-    "y": 476,
-    "radius": 11,
-    "rotation": 114,
-    "variety": 0
-  },
-  {
     "id": "plant-foxtail-398",
     "species": "foxtail",
     "x": 665,
@@ -3595,15 +2938,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 11,
     "rotation": 338,
     "variety": 1
-  },
-  {
-    "id": "plant-foxtail-400",
-    "species": "foxtail",
-    "x": 694,
-    "y": 422,
-    "radius": 9,
-    "rotation": 201,
-    "variety": 2
   },
   {
     "id": "plant-foxtail-401",
@@ -3669,15 +3003,6 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 2
   },
   {
-    "id": "plant-foxtail-408",
-    "species": "foxtail",
-    "x": 347,
-    "y": 646,
-    "radius": 9,
-    "rotation": 235,
-    "variety": 0
-  },
-  {
     "id": "plant-foxtail-409",
     "species": "foxtail",
     "x": 231,
@@ -3732,30 +3057,12 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "variety": 0
   },
   {
-    "id": "plant-foxtail-415",
-    "species": "foxtail",
-    "x": 448,
-    "y": 552,
-    "radius": 11,
-    "rotation": 19,
-    "variety": 0
-  },
-  {
     "id": "plant-foxtail-416",
     "species": "foxtail",
     "x": 246,
     "y": 661,
     "radius": 9,
     "rotation": 140,
-    "variety": 2
-  },
-  {
-    "id": "plant-foxtail-417",
-    "species": "foxtail",
-    "x": 629,
-    "y": 478,
-    "radius": 9,
-    "rotation": 320,
     "variety": 2
   },
   {
@@ -3766,6 +3073,546 @@ export const FIXED_PLANTS: PlantIndividual[] = [
     "radius": 9,
     "rotation": 20,
     "variety": 0
+  },
+  {
+    "id": "plant-clover-q1-1",
+    "species": "clover",
+    "x": 423,
+    "y": 229,
+    "radius": 16,
+    "rotation": 43,
+    "variety": 0
+  },
+  {
+    "id": "plant-clover-q1-2",
+    "species": "clover",
+    "x": 493,
+    "y": 233,
+    "radius": 16,
+    "rotation": 110,
+    "variety": 1
+  },
+  {
+    "id": "plant-clover-q1-3",
+    "species": "clover",
+    "x": 458,
+    "y": 301,
+    "radius": 16,
+    "rotation": 177,
+    "variety": 2
+  },
+  {
+    "id": "plant-dandelion-q1-1",
+    "species": "dandelion",
+    "x": 418,
+    "y": 286,
+    "radius": 12,
+    "rotation": 43,
+    "variety": 0
+  },
+  {
+    "id": "plant-dandelion-q1-2",
+    "species": "dandelion",
+    "x": 503,
+    "y": 296,
+    "radius": 12,
+    "rotation": 110,
+    "variety": 1
+  },
+  {
+    "id": "plant-violet-q1-1",
+    "species": "violet",
+    "x": 458,
+    "y": 259,
+    "radius": 11,
+    "rotation": 43,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q1-1",
+    "species": "foxtail",
+    "x": 410,
+    "y": 209,
+    "radius": 7,
+    "rotation": 43,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q1-2",
+    "species": "foxtail",
+    "x": 456,
+    "y": 211,
+    "radius": 8,
+    "rotation": 110,
+    "variety": 1
+  },
+  {
+    "id": "plant-foxtail-q1-3",
+    "species": "foxtail",
+    "x": 516,
+    "y": 213,
+    "radius": 7,
+    "rotation": 177,
+    "variety": 2
+  },
+  {
+    "id": "plant-foxtail-q1-4",
+    "species": "foxtail",
+    "x": 410,
+    "y": 323,
+    "radius": 8,
+    "rotation": 244,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q1-5",
+    "species": "foxtail",
+    "x": 516,
+    "y": 259,
+    "radius": 8,
+    "rotation": 311,
+    "variety": 1
+  },
+  {
+    "id": "plant-foxtail-q1-6",
+    "species": "foxtail",
+    "x": 490,
+    "y": 323,
+    "radius": 7,
+    "rotation": 18,
+    "variety": 2
+  },
+  {
+    "id": "plant-clover-q2-1",
+    "species": "clover",
+    "x": 595,
+    "y": 406,
+    "radius": 16,
+    "rotation": 86,
+    "variety": 0
+  },
+  {
+    "id": "plant-clover-q2-2",
+    "species": "clover",
+    "x": 669,
+    "y": 406,
+    "radius": 16,
+    "rotation": 153,
+    "variety": 1
+  },
+  {
+    "id": "plant-clover-q2-3",
+    "species": "clover",
+    "x": 595,
+    "y": 480,
+    "radius": 16,
+    "rotation": 220,
+    "variety": 2
+  },
+  {
+    "id": "plant-clover-q2-4",
+    "species": "clover",
+    "x": 669,
+    "y": 480,
+    "radius": 16,
+    "rotation": 287,
+    "variety": 0
+  },
+  {
+    "id": "plant-dandelion-q2-1",
+    "species": "dandelion",
+    "x": 632,
+    "y": 408,
+    "radius": 12,
+    "rotation": 86,
+    "variety": 0
+  },
+  {
+    "id": "plant-violet-q2-1",
+    "species": "violet",
+    "x": 599,
+    "y": 443,
+    "radius": 11,
+    "rotation": 86,
+    "variety": 0
+  },
+  {
+    "id": "plant-violet-q2-2",
+    "species": "violet",
+    "x": 665,
+    "y": 443,
+    "radius": 11,
+    "rotation": 153,
+    "variety": 1
+  },
+  {
+    "id": "plant-foxtail-q2-1",
+    "species": "foxtail",
+    "x": 632,
+    "y": 383,
+    "radius": 7,
+    "rotation": 86,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q2-2",
+    "species": "foxtail",
+    "x": 575,
+    "y": 443,
+    "radius": 8,
+    "rotation": 153,
+    "variety": 1
+  },
+  {
+    "id": "plant-foxtail-q2-3",
+    "species": "foxtail",
+    "x": 689,
+    "y": 443,
+    "radius": 7,
+    "rotation": 220,
+    "variety": 2
+  },
+  {
+    "id": "plant-foxtail-q2-4",
+    "species": "foxtail",
+    "x": 632,
+    "y": 453,
+    "radius": 8,
+    "rotation": 287,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q2-5",
+    "species": "foxtail",
+    "x": 632,
+    "y": 500,
+    "radius": 8,
+    "rotation": 354,
+    "variety": 1
+  },
+  {
+    "id": "plant-clover-q3-1",
+    "species": "clover",
+    "x": 180,
+    "y": 183,
+    "radius": 16,
+    "rotation": 129,
+    "variety": 0
+  },
+  {
+    "id": "plant-clover-q3-2",
+    "species": "clover",
+    "x": 250,
+    "y": 183,
+    "radius": 16,
+    "rotation": 196,
+    "variety": 1
+  },
+  {
+    "id": "plant-clover-q3-3",
+    "species": "clover",
+    "x": 215,
+    "y": 253,
+    "radius": 16,
+    "rotation": 263,
+    "variety": 2
+  },
+  {
+    "id": "plant-dandelion-q3-1",
+    "species": "dandelion",
+    "x": 175,
+    "y": 236,
+    "radius": 12,
+    "rotation": 129,
+    "variety": 0
+  },
+  {
+    "id": "plant-dandelion-q3-2",
+    "species": "dandelion",
+    "x": 255,
+    "y": 236,
+    "radius": 12,
+    "rotation": 196,
+    "variety": 1
+  },
+  {
+    "id": "plant-dandelion-q3-3",
+    "species": "dandelion",
+    "x": 215,
+    "y": 171,
+    "radius": 12,
+    "rotation": 263,
+    "variety": 2
+  },
+  {
+    "id": "plant-violet-q3-1",
+    "species": "violet",
+    "x": 182,
+    "y": 209,
+    "radius": 11,
+    "rotation": 129,
+    "variety": 0
+  },
+  {
+    "id": "plant-violet-q3-2",
+    "species": "violet",
+    "x": 248,
+    "y": 209,
+    "radius": 11,
+    "rotation": 196,
+    "variety": 1
+  },
+  {
+    "id": "plant-clover-q4-1",
+    "species": "clover",
+    "x": 110,
+    "y": 410,
+    "radius": 16,
+    "rotation": 172,
+    "variety": 0
+  },
+  {
+    "id": "plant-clover-q4-2",
+    "species": "clover",
+    "x": 180,
+    "y": 410,
+    "radius": 16,
+    "rotation": 239,
+    "variety": 1
+  },
+  {
+    "id": "plant-clover-q4-3",
+    "species": "clover",
+    "x": 145,
+    "y": 476,
+    "radius": 16,
+    "rotation": 306,
+    "variety": 2
+  },
+  {
+    "id": "plant-dandelion-q4-1",
+    "species": "dandelion",
+    "x": 108,
+    "y": 463,
+    "radius": 12,
+    "rotation": 172,
+    "variety": 0
+  },
+  {
+    "id": "plant-dandelion-q4-2",
+    "species": "dandelion",
+    "x": 182,
+    "y": 463,
+    "radius": 12,
+    "rotation": 239,
+    "variety": 1
+  },
+  {
+    "id": "plant-violet-q4-1",
+    "species": "violet",
+    "x": 145,
+    "y": 438,
+    "radius": 11,
+    "rotation": 172,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q4-1",
+    "species": "foxtail",
+    "x": 90,
+    "y": 388,
+    "radius": 8,
+    "rotation": 172,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q4-2",
+    "species": "foxtail",
+    "x": 145,
+    "y": 388,
+    "radius": 7,
+    "rotation": 239,
+    "variety": 1
+  },
+  {
+    "id": "plant-foxtail-q4-3",
+    "species": "foxtail",
+    "x": 200,
+    "y": 388,
+    "radius": 8,
+    "rotation": 306,
+    "variety": 2
+  },
+  {
+    "id": "plant-foxtail-q4-4",
+    "species": "foxtail",
+    "x": 90,
+    "y": 498,
+    "radius": 7,
+    "rotation": 13,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q4-5",
+    "species": "foxtail",
+    "x": 200,
+    "y": 498,
+    "radius": 8,
+    "rotation": 80,
+    "variety": 1
+  },
+  {
+    "id": "plant-foxtail-q4-6",
+    "species": "foxtail",
+    "x": 90,
+    "y": 436,
+    "radius": 8,
+    "rotation": 147,
+    "variety": 2
+  },
+  {
+    "id": "plant-foxtail-q4-7",
+    "species": "foxtail",
+    "x": 200,
+    "y": 436,
+    "radius": 7,
+    "rotation": 214,
+    "variety": 0
+  },
+  {
+    "id": "plant-clover-q5-1",
+    "species": "clover",
+    "x": 386,
+    "y": 580,
+    "radius": 16,
+    "rotation": 215,
+    "variety": 0
+  },
+  {
+    "id": "plant-clover-q5-2",
+    "species": "clover",
+    "x": 460,
+    "y": 580,
+    "radius": 16,
+    "rotation": 282,
+    "variety": 1
+  },
+  {
+    "id": "plant-clover-q5-3",
+    "species": "clover",
+    "x": 388,
+    "y": 652,
+    "radius": 16,
+    "rotation": 349,
+    "variety": 2
+  },
+  {
+    "id": "plant-clover-q5-4",
+    "species": "clover",
+    "x": 458,
+    "y": 652,
+    "radius": 16,
+    "rotation": 56,
+    "variety": 0
+  },
+  {
+    "id": "plant-dandelion-q5-1",
+    "species": "dandelion",
+    "x": 423,
+    "y": 578,
+    "radius": 12,
+    "rotation": 215,
+    "variety": 0
+  },
+  {
+    "id": "plant-dandelion-q5-2",
+    "species": "dandelion",
+    "x": 423,
+    "y": 655,
+    "radius": 12,
+    "rotation": 282,
+    "variety": 1
+  },
+  {
+    "id": "plant-violet-q5-1",
+    "species": "violet",
+    "x": 423,
+    "y": 616,
+    "radius": 11,
+    "rotation": 215,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q5-1",
+    "species": "foxtail",
+    "x": 368,
+    "y": 560,
+    "radius": 8,
+    "rotation": 215,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q5-2",
+    "species": "foxtail",
+    "x": 478,
+    "y": 560,
+    "radius": 7,
+    "rotation": 282,
+    "variety": 1
+  },
+  {
+    "id": "plant-foxtail-q5-3",
+    "species": "foxtail",
+    "x": 368,
+    "y": 670,
+    "radius": 8,
+    "rotation": 349,
+    "variety": 2
+  },
+  {
+    "id": "plant-foxtail-q5-4",
+    "species": "foxtail",
+    "x": 478,
+    "y": 670,
+    "radius": 7,
+    "rotation": 56,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q5-5",
+    "species": "foxtail",
+    "x": 368,
+    "y": 615,
+    "radius": 8,
+    "rotation": 123,
+    "variety": 1
+  },
+  {
+    "id": "plant-foxtail-q5-6",
+    "species": "foxtail",
+    "x": 478,
+    "y": 615,
+    "radius": 7,
+    "rotation": 190,
+    "variety": 2
+  },
+  {
+    "id": "plant-foxtail-q5-7",
+    "species": "foxtail",
+    "x": 396,
+    "y": 616,
+    "radius": 8,
+    "rotation": 257,
+    "variety": 0
+  },
+  {
+    "id": "plant-foxtail-q5-8",
+    "species": "foxtail",
+    "x": 450,
+    "y": 616,
+    "radius": 7,
+    "rotation": 324,
+    "variety": 1
   }
 ];
 
@@ -3812,81 +3659,82 @@ export const FIXED_QUADRATS: Quadrat[] = [
 
 /**
  * 고정된 식물 데이터와 고정된 방형구로부터 도출된 불변의 정답 관측치
+ * (모든 피도는 순수 정수 % 단위로 설계됨)
  */
 export const FIXED_TRUE_QUADRAT_STATS: TrueQuadratStat[] = [
   {
     "quadratId": 1,
     "counts": {
       "clover": 3,
-      "dandelion": 3,
+      "dandelion": 2,
       "violet": 1,
-      "foxtail": 3
+      "foxtail": 6
     },
     "covers": {
-      "clover": 6.7,
-      "dandelion": 4.6,
-      "violet": 1.7,
-      "foxtail": 4.1
+      "clover": 10,
+      "dandelion": 4,
+      "violet": 2,
+      "foxtail": 3
     }
   },
   {
     "quadratId": 2,
     "counts": {
-      "clover": 2,
+      "clover": 4,
       "dandelion": 1,
-      "violet": 7,
-      "foxtail": 3
+      "violet": 2,
+      "foxtail": 5
     },
     "covers": {
-      "clover": 4.3,
-      "dandelion": 1.2,
-      "violet": 14.4,
-      "foxtail": 3.4
+      "clover": 12,
+      "dandelion": 2,
+      "violet": 4,
+      "foxtail": 3
     }
   },
   {
     "quadratId": 3,
     "counts": {
       "clover": 3,
-      "dandelion": 2,
-      "violet": 4,
-      "foxtail": 1
+      "dandelion": 3,
+      "violet": 2,
+      "foxtail": 0
     },
     "covers": {
-      "clover": 5.3,
-      "dandelion": 3.5,
-      "violet": 8.1,
-      "foxtail": 1.1
+      "clover": 10,
+      "dandelion": 6,
+      "violet": 4,
+      "foxtail": 0
     }
   },
   {
     "quadratId": 4,
     "counts": {
-      "clover": 0,
-      "dandelion": 4,
+      "clover": 3,
+      "dandelion": 2,
       "violet": 1,
-      "foxtail": 2
+      "foxtail": 7
     },
     "covers": {
-      "clover": 0,
-      "dandelion": 6.5,
-      "violet": 1.7,
-      "foxtail": 2.9
+      "clover": 10,
+      "dandelion": 4,
+      "violet": 2,
+      "foxtail": 4
     }
   },
   {
     "quadratId": 5,
     "counts": {
-      "clover": 0,
-      "dandelion": 4,
+      "clover": 4,
+      "dandelion": 2,
       "violet": 1,
-      "foxtail": 6
+      "foxtail": 8
     },
     "covers": {
-      "clover": 0,
-      "dandelion": 6,
-      "violet": 1.4,
-      "foxtail": 9
+      "clover": 13,
+      "dandelion": 4,
+      "violet": 3,
+      "foxtail": 5
     }
   }
 ];

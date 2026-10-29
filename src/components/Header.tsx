@@ -24,12 +24,8 @@ export const Header: React.FC<HeaderProps> = ({
   const [showQrModal, setShowQrModal] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
 
-  // App URL for student distribution
-  const appUrl = typeof window !== 'undefined'
-    ? (window.location.origin.includes('localhost')
-        ? 'https://ais-pre-7bb5ifyn4zlioo7h5x6r3u-166168058440.asia-northeast1.run.app'
-        : window.location.origin)
-    : 'https://ais-pre-7bb5ifyn4zlioo7h5x6r3u-166168058440.asia-northeast1.run.app';
+  // App URL for student distribution (GitHub Pages 배포 주소)
+  const appUrl = 'https://csa448714-create.github.io/plant-quadrat-game/';
 
   const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
     appUrl
@@ -222,6 +218,16 @@ export const Header: React.FC<HeaderProps> = ({
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-800 stroke-[3]" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? '복사됨!' : '주소 복사'}</span>
                 </button>
+                <a
+                  href={appUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold text-white bg-[#15803d] hover:bg-[#166534] border-l-2 border-stone-800 pixel-btn pixel-font cursor-pointer shrink-0"
+                  title="새 창에서 배포된 게임 바로 열기"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">접속</span>
+                </a>
               </div>
             </div>
 
